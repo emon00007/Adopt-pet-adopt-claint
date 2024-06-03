@@ -1,8 +1,11 @@
-// import { Button } from "@material-tailwind/react";
+import BannerSection from "../BannerSection/BannerSection";
+import PetsCategorySection from "../PetCategorySection/PetsCategorySection";
+
 const Home = () => {
     return (
-        <div className="text-center">
-            {/* <Button>Button</Button> */}
+        <div className="">
+            <BannerSection> </BannerSection>
+            <PetsCategorySection></PetsCategorySection>
         </div>
     );
 };
