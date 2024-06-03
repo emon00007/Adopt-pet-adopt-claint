@@ -6,7 +6,7 @@ const PetsCategorySection = () => {
         <div className="  text-center p-5">
             <Button className=" bg-blue-gray-400">Find Adoptions</Button>
         </div>
-            <div className="grid md:grid-cols-5  items-center gap-5 m-auto text-center md:h-56">
+            <div className="grid justify-center md:grid-cols-5  items-center gap-5 m-auto text-center md:h-56">
 
                 <div className=" border shadow-sm">
                     <img className="h-48" src="https://i.ibb.co/HxDDvYm/47062.png" alt="" />
