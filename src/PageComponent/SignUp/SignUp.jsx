@@ -16,7 +16,7 @@ import Swal from "sweetalert2";
 const SignUp = () => {
     const { register, handleSubmit,reset, formState: { errors } } = useForm();
     const {createUser,updateUserProfile}= useContext(AuthContext);
-    const navigate = useNavigate();
+    const navigate = useNavigate ();
 
    
     const onSubmit = (data) => {
