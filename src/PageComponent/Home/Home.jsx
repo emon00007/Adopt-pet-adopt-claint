@@ -3,7 +3,7 @@ import PetsCategorySection from "../PetCategorySection/PetsCategorySection";
 
 const Home = () => {
     return (
-        <div className="">
+        <div>
             <BannerSection> </BannerSection>
             <PetsCategorySection></PetsCategorySection>
         </div>

@@ -1,17 +1,18 @@
-import  { useEffect, useState,} from "react";
+import  { useContext, useEffect, useState,} from "react";
 import {
   Navbar as MTNavbar,
   MobileNav,
   Typography,
-  Button,
+ 
   IconButton,
 
 } from "@material-tailwind/react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const CustomNavbar = () => {
   const [openNav, setOpenNav] = useState(false);
-
+  const { user, LogOut } = useContext(AuthContext);
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 960) setOpenNav(false);
@@ -21,19 +22,33 @@ const CustomNavbar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+
+  const handleLogOut = () => {
+    LogOut()
+        .then(() => { })
+        .catch(error => console.log(error));
+}
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <li><NavLink to='/'>Home</NavLink></li>
       <li><NavLink to='/'>Pet Listing</NavLink></li>
       <li><NavLink to='/'> Donation Campaigns</NavLink></li>
-      <li><NavLink to='/Login'> Log In</NavLink></li>
+      <li><NavLink to='/Petlisting'>Petlisting</NavLink></li>
+      {
+                user ? <>
+                    {/* <span>{user?.displayName}</span> */}
+                    <button onClick={handleLogOut} className="btn btn-ghost">LogOut</button>
+                </> : <>
+                    <li><Link to="/Login">Login</Link></li>
+                </>
+            }
       <li><NavLink to='/SignUp'> Sign Up</NavLink></li>
  
     </ul>
   );
 
   return (
-    <div className="-m-6 max-h-[768px]  w-[calc(100%+48px)] overflow-scroll">
+    <div className=" max-h-[768px]   ">
       <MTNavbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
         <div className="flex items-center justify-between text-blue-gray-900">
           <Typography
