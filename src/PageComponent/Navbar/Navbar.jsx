@@ -31,9 +31,9 @@ const CustomNavbar = () => {
   const navList = (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <li><NavLink to='/'>Home</NavLink></li>
-      <li><NavLink to='/'>Pet Listing</NavLink></li>
+      <li><NavLink to='/Petlisting'>Pet Listing</NavLink></li>
       <li><NavLink to='/'> Donation Campaigns</NavLink></li>
-      <li><NavLink to='/Petlisting'>Petlisting</NavLink></li>
+      <li><NavLink to='/Addapet'>Add a pet</NavLink></li>
       {
                 user ? <>
                     {/* <span>{user?.displayName}</span> */}

@@ -5,9 +5,13 @@ import {
     CardFooter,
     Typography,
     Button,
+   
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
+import { Link, } from "react-router-dom";
+
 import Select from 'react-select';
+
 
 const options = [
     { value: '', label: 'All Categories' },
@@ -18,11 +22,12 @@ const options = [
 ];
 
 const Petlisting = () => {
+   
     const [selectedOption, setSelectedOption] = useState(options[0]);
     const [searchTerm, setSearchTerm] = useState('');
     const [pets, setPets] = useState([]);
-    const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    
 
     useEffect(() => {
         setIsLoading(true);
@@ -44,7 +49,7 @@ const Petlisting = () => {
             })
             .catch(error => {
                 console.error( error);
-                setError(error);
+                // setError(error);
                 setIsLoading(false);
             });
     }, [selectedOption, searchTerm]);
@@ -68,11 +73,11 @@ const Petlisting = () => {
             </div>
 
             {isLoading && <p>Loading...</p>}
-            {error && <p>Error: {error.message}</p>}
+            
 
-            <div className="flex flex-wrap">
+            <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-10  ">
                 {pets.map(pet => (
-                    <Card key={pet._id} className="mt-6 w-96">
+                    <Card key={pet._id} className="mt-6 ">
                         <CardHeader color="blue-gray" className="relative h-56">
                             <img
                                 src={pet.imageUrl}  // Assuming the pet data has an imageUrl field
@@ -89,7 +94,8 @@ const Petlisting = () => {
                             </Typography>
                         </CardBody>
                         <CardFooter className="pt-0">
-                            <Button>Read More</Button>
+                        
+                        <Link to={`/pet/${pet._id}`}><Button >View Details</Button></Link>
                         </CardFooter>
                     </Card>
                 ))}
