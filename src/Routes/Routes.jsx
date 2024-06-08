@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 import Petlisting from "../PageComponent/Petlisting/Petlisting";
 import PetDetails from "../PageComponent/PetDetails/PetDetails";
 import Addapet from "../PageComponent/Addapet/Addapet";
+import MyAddSection from "../PageComponent/MyAddPetSection/MyAddSection";
 
 export const router = createBrowserRouter([
     {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
             {
                 path:'/pet/:id',
                 element:<PetDetails></PetDetails>
+            },
+            {
+                path:'/MyAddSection',
+                element:<MyAddSection></MyAddSection>
             }
         ]
     },
