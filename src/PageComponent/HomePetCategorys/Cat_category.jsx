@@ -19,7 +19,7 @@ const Cat_category = () => {
                     <Card key={cat._id} className="mt-6 ">
                         <CardHeader color="blue-gray" className="relative h-56">
                             <img
-                                src={cat.petImage}  // Assuming the pet data has an imageUrl field
+                                src={cat.petImage}  
                                 alt="pet"
                                 className="w-full h-full object-cover"
                             />
