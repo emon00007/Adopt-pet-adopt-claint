@@ -25,7 +25,7 @@ const Addapet = () => {
   const initialValues = {
     petName: '',
     petAge: '',
-    petCategory: '',
+    category: '',
     petLocation: '',
     shortDescription: '',
     longDescription: '',
@@ -35,7 +35,7 @@ const Addapet = () => {
   const validationSchema = Yup.object({
     petName: Yup.string().required('Pet name is required'),
     petAge: Yup.number().required('Pet age is required').positive('Age must be positive').integer('Age must be an integer'),
-    petCategory: Yup.string().required('Pet category is required'),
+    category: Yup.string().required('Pet category is required'),
     petLocation: Yup.string().required('Pet location is required'),
     shortDescription: Yup.string().required('Short description is required'),
     longDescription: Yup.string().required('Long description is required'),
@@ -111,13 +111,13 @@ const Addapet = () => {
           </div>
 
           <div className='w-1/2'>
-            <label htmlFor="petCategory">Pet Category</label>
+            <label htmlFor="category">Pet Category</label>
             <Select
-              id="petCategory"
+              id="category"
               options={petCategories}
-              onChange={(option) => setFieldValue('petCategory', option.value)}
+              onChange={(option) => setFieldValue('category', option.value)}
             />
-            <ErrorMessage className='text-red-500' name="petCategory" component="div" />
+            <ErrorMessage className='text-red-500' name="category" component="div" />
           </div>
 
           <div>

@@ -7,7 +7,7 @@ import {
     Button,
    
 } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { Link, } from "react-router-dom";
 
 import Select from 'react-select';
@@ -53,7 +53,7 @@ const Petlisting = () => {
                 setIsLoading(false);
             });
     }, [selectedOption, searchTerm]);
-
+console.log(selectedOption,searchTerm);
     return (
         <div className="p-4">
             <div className="flex mb-4">
@@ -80,17 +80,17 @@ const Petlisting = () => {
                     <Card key={pet._id} className="mt-6 ">
                         <CardHeader color="blue-gray" className="relative h-56">
                             <img
-                                src={pet.imageUrl}  // Assuming the pet data has an imageUrl field
+                                src={pet.petImage}  // Assuming the pet data has an imageUrl field
                                 alt="pet"
                                 className="w-full h-full object-cover"
                             />
                         </CardHeader>
                         <CardBody>
                             <Typography variant="h5" color="blue-gray" className="mb-2">
-                                {pet.name}
+                                {pet.petName}
                             </Typography>
                             <Typography>
-                                {pet.description}
+                                {pet.shortDescription}
                             </Typography>
                         </CardBody>
                         <CardFooter className="pt-0">
