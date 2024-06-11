@@ -12,14 +12,17 @@ import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet";
 import Swal from "sweetalert2";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 
 const SignUp = () => {
+    const axiosPublic =useAxiosPublic()
     const { register, handleSubmit,reset, formState: { errors } } = useForm();
-    const {createUser,updateUserProfile}= useContext(AuthContext);
+    const {createUser,updateUserProfile,user}= useContext(AuthContext);
     const navigate = useNavigate ();
 
-   
+
+   console.log(user);
     const onSubmit = (data) => {
         console.log(data)
         createUser(data.email, data.password)
@@ -27,6 +30,16 @@ const SignUp = () => {
             const loggedUser = result.user 
             console.log(loggedUser)
             updateUserProfile(data.name, data.photoURL)
+            const userInfo ={
+                name: data.name,
+                email: data.email,
+                role:"user"
+            }
+            console.log(result.user?.email)
+            axiosPublic.post('/userAdded',userInfo)
+            .then(res=>{
+                console.log(res.data)
+            })
             .then(() => {
                 console.log('user profile info updated')
                 reset();

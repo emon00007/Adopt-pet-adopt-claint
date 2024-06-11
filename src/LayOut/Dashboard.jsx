@@ -20,19 +20,19 @@ const Dashboard = () => {
                     Adopts
                 </Typography>
                 <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box ">
-                    <li ><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd><NavLink className="  font-semibold" to="Addapet">Add a Pet</NavLink></ListItem></li>
+                    <li ><NavLink className="  font-semibold" to="Addapet"><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>Add a Pet</ListItem></NavLink></li>
 
-                    <li> <ListItem className=" gap-2"> <FaTableList className=" text-lg"></FaTableList><NavLink className="  font-semibold" to="MyAddSection">My Add Page</NavLink></ListItem></li>
+                    <li><NavLink className="  font-semibold" to="MyAddSection"> <ListItem className=" gap-2"> <FaTableList className=" text-lg"></FaTableList>My Add Page</ListItem></NavLink></li>
 
-                    <li> <ListItem className=" gap-2"> <SiMercadopago className="text-2xl"></SiMercadopago><NavLink className="  font-semibold" to="CreateDonation">Create Donation Campaign</NavLink></ListItem></li>
+                    <li><NavLink className="  font-semibold" to="CreateDonation"> <ListItem className=" gap-2"> <SiMercadopago className="text-2xl"></SiMercadopago>Create Donation Campaign</ListItem></NavLink></li>
 
-                    <li> <ListItem className=" gap-2"> <MdOutlineFeed className="text-2xl"></MdOutlineFeed><NavLink className="  font-semibold" to="CreateDonation">Adoption Request</NavLink></ListItem></li>
+                    <li><NavLink className="  font-semibold" to="adoptRequest"> <ListItem className=" gap-2"> <MdOutlineFeed className="text-2xl"></MdOutlineFeed>Adoption Request</ListItem></NavLink></li>
 
-                    <li> <ListItem className=" gap-2"> <FaDonate></FaDonate><NavLink className="  font-semibold" to="MyAddSection">My Donation Campaign</NavLink></ListItem></li>
+                    <li> <NavLink className="  font-semibold" to="MyDonationCampaign"> <ListItem className=" gap-2"> <FaDonate></FaDonate>My Donation Campaign</ListItem></NavLink></li>
 
-                    <li> <ListItem className="gap-2" > <AiOutlineHome className="text-xl"></AiOutlineHome><NavLink className="  font-semibold" to="/">Go to Page</NavLink></ListItem></li>
+                    <li><NavLink className="  font-semibold" to="/"> <ListItem className="gap-2" > <AiOutlineHome className="text-xl"></AiOutlineHome>Go to Page</ListItem></NavLink></li>
 
-                    <li> <ListItem className="gap-2"> <IoIosLogOut className="text-xl"></IoIosLogOut><NavLink className="  font-semibold" to="MyAddSection">Log Out</NavLink></ListItem></li>
+                    <li><NavLink className="  font-semibold" > <ListItem className="gap-2"> <IoIosLogOut className="text-xl"></IoIosLogOut>Log Out</ListItem></NavLink></li>
                 </ul>
             </div>
             <div className="flex-1 bg-blue-gray-200"><Outlet></Outlet></div>

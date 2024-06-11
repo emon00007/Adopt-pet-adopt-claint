@@ -20,6 +20,7 @@ import MyAddSection from "../PageComponent/MyAddPetSection/MyAddSection";
 import CreateDonation from "../PageComponent/DonationSection/CreateDonation/CreateDonation";
 import DonationCampain from "../PageComponent/DonationSection/DonationCampain";
 import DonationDetails from "../PageComponent/DonationSection/DonationCampaigns/DonationDetails";
+import MyDonationCampaign from "../PageComponent/MyDonationCampaign/MyDonationCampaign";
 
 
 export const router = createBrowserRouter([
@@ -103,6 +104,10 @@ export const router = createBrowserRouter([
             {
                 path: 'Addapet',
                 element: <PrivateRoute><Addapet></Addapet></PrivateRoute>
+            },
+            {
+                path: 'MyDonationCampaign',
+                element: <PrivateRoute><MyDonationCampaign></MyDonationCampaign></PrivateRoute>
             },
            
         ]

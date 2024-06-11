@@ -45,13 +45,14 @@ const googleProvider = new GoogleAuthProvider()
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser);
+            console.log(user)
             console.log('current User', currentUser);
             setLoading(false);
         });
         return () => {
             unsubscribe();
         };
-    }, []);
+    }, [user]);
 
     const AuthInfo = {
         user,
