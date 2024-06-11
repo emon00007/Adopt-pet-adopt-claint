@@ -1,8 +1,9 @@
-import  { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useTable, usePagination } from "react-table";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const TABLE_HEAD = ["S/N", "Pet Name", "Pet Category", "Pet Image", "Adoption Status", "Actions"];
 console.log(TABLE_HEAD);
@@ -31,9 +32,32 @@ const MyAddSection = () => {
         );
     }
 
-    const handleDelete =  async (_id) => {
-    await axios.delete(`http://localhost:5000/delete/${_id}`);
-};
+    const handleDelete = (_id) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axios.delete(`http://localhost:5000/delete/${_id}`)
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                    })
+            }
+        });
+
+    };
 
     const columns = useMemo(
         () => [
@@ -49,7 +73,7 @@ const MyAddSection = () => {
             },
             {
                 Header: "Pet Category",
-                accessor: "petCategory",
+                accessor: "category",
                 Cell: ({ value }) => <div className="text-black">{value}</div>,
             },
             {
@@ -71,8 +95,8 @@ const MyAddSection = () => {
                 Cell: ({ value }) => (
                     <span
                         className={`px-2 py-1 rounded-full text-xs font-semibold ${value
-                                ? "bg-green-100 text-green-800"
-                                : "bg-red-100 text-red-800"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
                             }`}
                     >
                         {value ? "Adopted" : "Not Adopted"}
@@ -131,9 +155,9 @@ const MyAddSection = () => {
 
     return (
         <div className="container mx-auto p-4">
-            <div className="mb-4">
-                <h2 className="text-xl font-semibold text-gray-700">Pet Listings</h2>
-                <p className="text-gray-500">These are the details about your pet listings</p>
+            <div className="my-4 text-center ">
+                <h2 className="text-3xl font-semibold  text-gray-900">Pet Listings</h2>
+                <p className="">These are the details about your pet listings</p>
             </div>
             <div className="overflow-x-auto">
                 <table {...getTableProps()} className="min-w-full bg-white border border-gray-200">
