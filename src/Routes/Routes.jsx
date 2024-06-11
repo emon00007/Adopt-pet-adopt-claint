@@ -19,6 +19,7 @@ import Addapet from "../PageComponent/Addapet/Addapet";
 import MyAddSection from "../PageComponent/MyAddPetSection/MyAddSection";
 import CreateDonation from "../PageComponent/DonationSection/CreateDonation/CreateDonation";
 import DonationCampain from "../PageComponent/DonationSection/DonationCampain";
+import DonationDetails from "../PageComponent/DonationSection/DonationCampaigns/DonationDetails";
 
 
 export const router = createBrowserRouter([
@@ -78,6 +79,12 @@ export const router = createBrowserRouter([
                 element:<DonationCampain></DonationCampain>
 
             }
+            ,
+            {
+                path:'/donation/:id',
+                element:<DonationDetails></DonationDetails>
+
+            }
         ]
     },
     {
@@ -96,7 +103,8 @@ export const router = createBrowserRouter([
             {
                 path: 'Addapet',
                 element: <PrivateRoute><Addapet></Addapet></PrivateRoute>
-            }
+            },
+           
         ]
     }
 ]);

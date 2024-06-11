@@ -10,7 +10,6 @@ import Swal from 'sweetalert2';
 const PetDetails = () => {
     const { id } = useParams();
     const [pet, setPet] = useState(null);
-    const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     // console.log(id)
     useEffect(() => {
@@ -29,7 +28,7 @@ const PetDetails = () => {
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
-                setError(error);
+                
                 setIsLoading(false);
             });
     }, [id]);
@@ -39,9 +38,7 @@ const PetDetails = () => {
         return <p>Loading...</p>;
     }
 
-    if (error) {
-        return <p>Error: {error.message}</p>;
-    }
+
     const HandelAdope =()=>{
         Swal.fire({
             position: "top-end",
@@ -53,7 +50,7 @@ const PetDetails = () => {
     }
 
     return (
-        pet && (
+
             <section className="py-16 px-8">
                 <div className="mx-auto border p-4 rounded-lg border-gray-600 container grid place-items-center grid-cols-1 md:grid-cols-2">
                     <img className='w-full p-4 m-4  rounded-lg border-gray-600 border' src={pet?.petImage} alt="" />
@@ -90,7 +87,7 @@ const PetDetails = () => {
 
             </section>
         )
-    );
+
 };
 
 export default PetDetails;
