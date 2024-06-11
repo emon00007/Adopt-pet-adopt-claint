@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Card, CardHeader, CardBody, Typography,  } from "@material-tailwind/react";
+import {
+    Button,
+    IconButton, 
+    Typography,
+} from "@material-tailwind/react";
+import Swal from 'sweetalert2';
 
 const PetDetails = () => {
     const { id } = useParams();
@@ -10,7 +15,7 @@ const PetDetails = () => {
     // console.log(id)
     useEffect(() => {
         setIsLoading(true);
-        
+
         fetch(`http://localhost:5000/petlisting/${id}`)
             .then(res => {
                 if (!res.ok) {
@@ -28,6 +33,7 @@ const PetDetails = () => {
                 setIsLoading(false);
             });
     }, [id]);
+    console.log(pet);
 
     if (isLoading) {
         return <p>Loading...</p>;
@@ -36,26 +42,53 @@ const PetDetails = () => {
     if (error) {
         return <p>Error: {error.message}</p>;
     }
+    const HandelAdope =()=>{
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500
+          });
+    }
 
     return (
         pet && (
-            <Card className="mt-6 w-96 mx-auto">
-                <CardHeader color="blue-gray" className="relative h-56">
-                    <img
-                        src={pet.imageUrl}
-                        alt="pet"
-                        className="w-full h-full object-cover"
-                    />
-                </CardHeader>
-                <CardBody>
-                    <Typography variant="h5" color="blue-gray" className="mb-2">
-                        {pet.name}
+            <section className="py-16 px-8">
+                <div className="mx-auto border p-4 rounded-lg border-gray-600 container grid place-items-center grid-cols-1 md:grid-cols-2">
+                    <img className='w-full p-4 m-4  rounded-lg border-gray-600 border' src={pet?.petImage} alt="" />
+                    <div className='p-4'>
+                        <Typography className="mb-4 text-gray-800 uppercase" variant="h4">
+                            {pet?.category}
+                        </Typography>
+                        <Typography className="mb-4" variant="h3">
+                            {pet?.petName}
+                        </Typography>
+                        <Typography variant="h5">{pet?.petName}</Typography>
+                        <Typography variant="h5">{pet?.shortDescription}</Typography>
+                        <Typography className="!mt-4 text-base font-normal leading-[27px] !text-gray-500">
+                            {pet?.longDescription}
+                        </Typography>
+
+                        <Typography className="!text-sm font-bold !text-gray-700">
+                            Date & time:{pet?.addedDate}
+                        </Typography>
+                    </div>
+                    <Typography color="blue-gray" variant="h6">
+                        Color
                     </Typography>
-                    <Typography>
-                        {pet.description}
-                    </Typography>
-                </CardBody>
-            </Card>
+
+                    <div className="mb-4 flex w-full items-center gap-3 md:w-1/2 ">
+                        <Button onClick={HandelAdope} color="gray" className="w-52">
+                            Adopt
+                        </Button>
+                        <IconButton color="gray" variant="text" className="shrink-0">
+
+                        </IconButton>
+                    </div>
+                </div>
+
+            </section>
         )
     );
 };

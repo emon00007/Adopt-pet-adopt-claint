@@ -30,20 +30,21 @@ const CustomNavbar = () => {
         .catch(error => console.log(error));
 }
   const navList = (
-    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+    <ul tabIndex={0} className="mt-2 mb-4 flex flex-col gap-2 bg-base-100 dropdown-content rounded-box lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <li> <ListItem><NavLink to='/'>Home</NavLink></ListItem></li>
-      <li><NavLink to='/Petlisting'>Pet Listing</NavLink></li>
-      <li><NavLink to='/dashboard'> Dashboard</NavLink></li>
+      <li><ListItem><NavLink to='/Petlisting'>Pet Listing</NavLink></ListItem></li>
+      <li><ListItem><NavLink to='/donationCampaignPage'>Donation Campaign</NavLink></ListItem></li>
+      <li><ListItem><NavLink to='/dashboard'> Dashboard</NavLink></ListItem></li>
 
       {
                 user ? <>
                     {/* <span>{user?.displayName}</span> */}
                     <button onClick={handleLogOut} className="btn btn-ghost">LogOut</button>
                 </> : <>
-                    <li><Link to="/Login">Login</Link></li>
+                    <li><ListItem><Link to="/Login">Login</Link></ListItem></li>
                 </>
             }
-      <li><NavLink to='/SignUp'> Sign Up</NavLink></li>
+      <li><ListItem><NavLink to='/SignUp'> Sign Up</NavLink></ListItem></li>
  
     </ul>
   );

@@ -11,6 +11,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet";
 import Swal from "sweetalert2";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 
 const SignUp = () => {
@@ -128,6 +129,7 @@ const SignUp = () => {
                                 {errors.password?.type == 'maxLength' && <span className="text-red-600"> Password mast be less 20 characters</span>}
                                 {errors.password?.type == 'pattern' && <span className="text-red-600"> Password mast have a lower case a Uper case a number and also a special character </span>}
                     </div>
+                    <SocialLogin></SocialLogin>
 
                     <Button type="onSubmit" className="mt-6" fullWidth>
                         sign up

@@ -18,6 +18,7 @@ import Dashboard from "../LayOut/Dashboard";
 import Addapet from "../PageComponent/Addapet/Addapet";
 import MyAddSection from "../PageComponent/MyAddPetSection/MyAddSection";
 import CreateDonation from "../PageComponent/DonationSection/CreateDonation/CreateDonation";
+import DonationCampain from "../PageComponent/DonationSection/DonationCampain";
 
 
 export const router = createBrowserRouter([
@@ -70,6 +71,11 @@ export const router = createBrowserRouter([
             {
                 path: '/pet/Allcategory',
                 element: <All_Category></All_Category>
+
+            },
+            {
+                path:'/donationCampaignPage',
+                element:<DonationCampain></DonationCampain>
 
             }
         ]

@@ -3,12 +3,13 @@ import {
     Input,
     Button,
     Typography,
-  } from "@material-tailwind/react";
+} from "@material-tailwind/react";
 import { useContext } from "react";
 import { Helmet } from "react-helmet";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 
 const LogIn = () => {
@@ -19,37 +20,37 @@ const LogIn = () => {
     const from = location.state?.from?.pathname || "/";
 
     const { signIn } = useContext(AuthContext);
-    const handelLogin =e=>{
+    const handelLogin = e => {
         e.preventDefault()
-        const form =e.target;
+        const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email,password)
+        console.log(email, password)
         signIn(email, password)
-        .then(result => {
-            const user = result.user;
-            console.log(user);
-            Swal.fire({
-                title: 'User Login Successful.',
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                }
-            });
-            navigate(from, { replace: true });
-        })
-}
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                Swal.fire({
+                    title: 'User Login Successful.',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });
+                navigate(from, { replace: true });
+            })
+    }
 
     return (
-        <div  className="mt-10 mx-8 grid md:grid-cols-2 gap-5 items-center  ">
+        <div className="mt-10 mx-8 grid md:grid-cols-2 gap-5 items-center  ">
             <Helmet>
                 <title>SignIn</title>
             </Helmet>
-            <Card color="transparent"  shadow={false}>
+            <Card color="transparent" shadow={false}>
                 <Typography variant="h4" color="blue-gray">
-                Sign In
+                    Sign In
                 </Typography>
                 <Typography color="gray" className="mt-1 font-normal">
                     Nice to meet you! Enter your details to log in.
@@ -61,7 +62,7 @@ const LogIn = () => {
                             Your Email
                         </Typography>
                         <Input
-                        name="email"
+                            name="email"
                             size="lg"
                             placeholder="name@mail.com"
                             className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -73,7 +74,7 @@ const LogIn = () => {
                             Password
                         </Typography>
                         <Input
-                        name="password"
+                            name="password"
                             type="password"
                             size="lg"
                             placeholder="********"
@@ -83,17 +84,19 @@ const LogIn = () => {
                             }}
                         />
                     </div>
-
+                    <SocialLogin></SocialLogin>
                     <Button type="onSubmit" className="mt-6" fullWidth>
-                         Sign In
+                        Sign In
                     </Button>
+
                     <Typography color="gray" className="mt-4 text-center font-normal">
                         Already have an account?{" "}
-                       <Link to="/SignUp">sign up</Link>
+                        <Link to="/SignUp">sign up</Link>
                     </Typography>
+
                 </form>
             </Card>
-            
+
             <img className="rounded-md" src="https://i.ibb.co/4JmR1JW/illustration-login-for-ui-ux-design-vector.jpg" alt="" />
         </div>
     );
