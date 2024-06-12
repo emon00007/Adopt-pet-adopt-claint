@@ -44,7 +44,7 @@ const AllPets = () => {
     return (
         <div className="container p-2 mx-auto sm:p-4 dark:text-gray-800">
             <Helmet><title>AllPets</title></Helmet>
-            <h2 className="mb-4 text-2xl font-semibold leading-tight">Contacts</h2>
+           
             <div className="overflow-x-auto">
                 <table className="w-full p-6 text-xs text-left whitespace-nowrap">
                     <colgroup>
