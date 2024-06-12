@@ -21,6 +21,8 @@ import CreateDonation from "../PageComponent/DonationSection/CreateDonation/Crea
 import DonationCampain from "../PageComponent/DonationSection/DonationCampain";
 import DonationDetails from "../PageComponent/DonationSection/DonationCampaigns/DonationDetails";
 import MyDonationCampaign from "../PageComponent/MyDonationCampaign/MyDonationCampaign";
+import AllUsers from "../PageComponent/AdminPanel/AllUsers";
+import AllPets from "../PageComponent/AdminPanel/AllPets";
 
 
 export const router = createBrowserRouter([
@@ -109,6 +111,15 @@ export const router = createBrowserRouter([
                 path: 'MyDonationCampaign',
                 element: <PrivateRoute><MyDonationCampaign></MyDonationCampaign></PrivateRoute>
             },
+            {
+                path:'allUsers',
+                element:<AllUsers></AllUsers>
+            }
+            ,
+            {
+                path:'allPets',
+                element:<AllPets></AllPets>
+            }
            
         ]
     }

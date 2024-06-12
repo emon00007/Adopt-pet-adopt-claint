@@ -33,7 +33,8 @@ const SignUp = () => {
             const userInfo ={
                 name: data.name,
                 email: data.email,
-                role:"user"
+                role:"user",
+                photoURL:data.photoURL
             }
             console.log(result.user?.email)
             axiosPublic.post('/userAdded',userInfo)
