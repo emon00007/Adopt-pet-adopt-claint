@@ -1,5 +1,6 @@
 import { Button, Card, CardBody, CardFooter, CardHeader, Typography } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 
 const DonationCampaign = () => {
@@ -18,6 +19,7 @@ const DonationCampaign = () => {
 
     return (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <Helmet><title>DonationCampaign</title></Helmet>
             {campaigns.length > 0 ? (
                 campaigns.map(campaign => (
                     <Card key={campaign._id} className="mt-6">

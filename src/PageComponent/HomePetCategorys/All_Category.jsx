@@ -9,11 +9,13 @@ import {
     Button,
    
 } from "@material-tailwind/react";
+import { Helmet } from "react-helmet";
 const All_Category = () => {
     const [categorys]=useCategory()
     
     return (
         <div className="p-4">
+            <Helmet><title>AllPets</title></Helmet>
         <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-10  ">
             {categorys.map(category => (
                 <Card key={category._id} className="mt-6 ">

@@ -9,12 +9,14 @@ import {
     Button,
    
 } from "@material-tailwind/react";
+import { Helmet } from "react-helmet";
 const Catagory_dog = () => {
     const [category]=useCategory()
         const dogs = category.filter(item=>item.category ==='dog')
     return (
         
         <div className="p-4">
+            <Helmet><title>Dog</title></Helmet>
         <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-10  ">
             {dogs.map(dog => (
                 <Card key={dog._id} className="mt-6 ">

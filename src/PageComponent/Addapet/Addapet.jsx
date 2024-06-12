@@ -5,6 +5,7 @@ import axios from 'axios';
 import Select from 'react-select';
 import { Button } from '@material-tailwind/react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
+import { Helmet } from 'react-helmet';
 
 const petCategories = [
     { value: 'dog', label: 'Dog' },
@@ -78,8 +79,10 @@ const Addapet = () => {
             validationSchema={validationSchema}
             onSubmit={onSubmit}
         >
+          
             {({ setFieldValue, isSubmitting, errors }) => (
                 <Form className='m-4 border p-2 shadow-lg bg-gray-100 rounded-md '>
+                      <Helmet><title>AddFood</title></Helmet>
                     <div className='text-center my-5 text-4xl font-bold'>
                     <h1>Add a New Pet</h1>
                     </div>

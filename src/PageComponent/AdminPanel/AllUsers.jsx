@@ -3,6 +3,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { Button } from "@material-tailwind/react";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 const AllUsers = () => {
     const { id } = useParams()
@@ -36,6 +37,7 @@ const AllUsers = () => {
 
     return (
         <div>
+            <Helmet><title>AllUser</title></Helmet>
             <div className="container p-2 mx-auto sm:p-4 dark:text-gray-800">
                 <h2 className="mb-4 text-2xl font-semibold text-center leading-tight">All Users </h2>
                 <div className="overflow-x-auto">

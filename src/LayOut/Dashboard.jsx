@@ -7,15 +7,17 @@ import { FaDonate } from "react-icons/fa";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoIosLogOut } from "react-icons/io";
 import { MdOutlineFeed } from "react-icons/md";
+import { Helmet } from "react-helmet";
 
 
 
 const Dashboard = () => {
-    const isAdmin = true
+    const isAdmin =false
     return (
 
 
         <div className="flex">
+            <Helmet><title>DashBoard</title></Helmet>
             <div className="w-72 main-h-full bg-deep-orange-100">
                 <Typography variant="h5" className="p-4" color="blue-gray">
                     Adopts
@@ -24,8 +26,9 @@ const Dashboard = () => {
                     {
                         isAdmin ? <>
                             <li ><NavLink className="  font-semibold" to="allUsers"><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>All Users</ListItem></NavLink></li>
-                            
+
                             <li ><NavLink className="  font-semibold" to="allPets"><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>All Pets</ListItem></NavLink></li>
+                            <li ><NavLink className="  font-semibold" to="allDonates"><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>All Pets</ListItem></NavLink></li>
                         </> : <>
                             <li ><NavLink className="  font-semibold" to="Addapet"><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>Add a Pet</ListItem></NavLink></li>
 

@@ -8,6 +8,7 @@ import {
    
 } from "@material-tailwind/react";
 import {  useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { Link, } from "react-router-dom";
 
 import Select from 'react-select';
@@ -56,6 +57,7 @@ const Petlisting = () => {
 console.log(selectedOption,searchTerm);
     return (
         <div className="p-4">
+            <Helmet><title>PetListing</title></Helmet>
             <div className="flex mb-4">
                 <Select
                     defaultValue={selectedOption}

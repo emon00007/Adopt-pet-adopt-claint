@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { Button } from "@material-tailwind/react";
+import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const AllPets = () => {
     const axiosSecure = useAxiosSecure();
@@ -11,8 +15,35 @@ const AllPets = () => {
         };
         fetchData();
     }, [axiosSecure]);
+
+    const HandelDeletePets = allPet => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axiosSecure.delete(`/allPets/${allPet._id}`)
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                    })
+            }
+        });
+    }
     return (
         <div className="container p-2 mx-auto sm:p-4 dark:text-gray-800">
+            <Helmet><title>AllPets</title></Helmet>
             <h2 className="mb-4 text-2xl font-semibold leading-tight">Contacts</h2>
             <div className="overflow-x-auto">
                 <table className="w-full p-6 text-xs text-left whitespace-nowrap">
@@ -45,26 +76,20 @@ const AllPets = () => {
                                     {allPet?.petName}
                                     </td>
                                     <td className="px-3 py-2">
-                                       <img src="" alt="" />
+                                       <img className="w-12 h-12 rounded-full" src={allPet?.petImage} alt="" />
                                        
                                     </td>
                                     <td className="px-3 py-2">
-                                        <p>555-873-9812</p>
+                                        <Button onClick={()=>HandelDeletePets(allPet)}>Delete</Button>
                                     </td>
                                     <td className="px-3 py-2">
-                                        <p>dwight@adams.com</p>
+                                        <Link to="/UpdatePage"><Button>Update</Button></Link>
                                     </td>
                                     <td className="px-3 py-2">
-                                        <p>71 Cherry Court, SO</p>
-                                        <p className="dark:text-gray-600">United Kingdom</p>
+                                       <Button>Adopted</Button>
+                                        
                                     </td>
-                                    <td className="px-3 py-2">
-                                        <button type="button" title="Open details" className="p-1 rounded-full dark:text-gray-400 hover:dark:bg-gray-300 focus:dark:bg-gray-300">
-                                            <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
-                                                <path d="M12 6a2 2 0 110-4 2 2 0 010 4zm0 8a2 2 0 110-4 2 2 0 010 4zm-2 6a2 2 0 104 0 2 2 0 00-4 0z"></path>
-                                            </svg>
-                                        </button>
-                                    </td>
+                                  
                                 </tr>
                             ))
                         }

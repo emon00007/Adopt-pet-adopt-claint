@@ -23,12 +23,15 @@ import DonationDetails from "../PageComponent/DonationSection/DonationCampaigns/
 import MyDonationCampaign from "../PageComponent/MyDonationCampaign/MyDonationCampaign";
 import AllUsers from "../PageComponent/AdminPanel/AllUsers";
 import AllPets from "../PageComponent/AdminPanel/AllPets";
+import ErrorPage from "../PageComponent/ErrorPage/ErrorPage";
+import AllDonates from "../PageComponent/AdminPanel/AllDonates";
 
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <Main></Main>,
+        errorElement:<ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/',
@@ -93,6 +96,7 @@ export const router = createBrowserRouter([
     {
         path: "/dashboard",
         element:<Dashboard></Dashboard>,
+        errorElement:<ErrorPage></ErrorPage>,
         children:[
             {
                 path: 'MyAddSection',
@@ -105,7 +109,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'Addapet',
-                element: <PrivateRoute><Addapet></Addapet></PrivateRoute>
+                element: <Addapet></Addapet>
             },
             {
                 path: 'MyDonationCampaign',
@@ -119,6 +123,11 @@ export const router = createBrowserRouter([
             {
                 path:'allPets',
                 element:<AllPets></AllPets>
+            }
+            ,
+            {
+                path:'allDonates',
+                element:<AllDonates></AllDonates>
             }
            
         ]

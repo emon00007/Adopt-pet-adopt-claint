@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
     Button,
-    IconButton,
+    
     Typography,
 } from "@material-tailwind/react";
+import { Helmet } from 'react-helmet';
 
 
 
@@ -44,6 +45,7 @@ const DonationDetails = () => {
     return (
 
         <section className="py-16 px-8">
+            <Helmet><title>DonationDetails</title></Helmet>
             <div className="mx-auto border p-4 rounded-lg border-gray-600 container  grid place-items-center grid-cols-1 md:grid-cols-2">
                 <img className='w-full p-4 m-4  rounded-lg border-gray-600 border h-[700px]' src={donatePet?.petImage} alt="" />
                 <div className='p-4'>
@@ -65,7 +67,7 @@ const DonationDetails = () => {
                     </Typography>
                     <div className="mb-4 flex w-full items-center gap-3 md:w-1/2 ">
                         <Button onClick={handelDonate} color="gray" className="w-52">
-                            Adopt
+                           Donate Now
                         </Button>
 
                     </div>

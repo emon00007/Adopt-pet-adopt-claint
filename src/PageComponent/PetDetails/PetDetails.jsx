@@ -6,6 +6,7 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import Swal from 'sweetalert2';
+import { Helmet } from 'react-helmet';
 
 const PetDetails = () => {
     const { id } = useParams();
@@ -52,6 +53,7 @@ const PetDetails = () => {
     return (
 
             <section className="py-16 px-8">
+                <Helmet><title>PeyDetails</title></Helmet>
                 <div className="mx-auto border p-4 rounded-lg border-gray-600 container grid place-items-center grid-cols-1 md:grid-cols-2">
                     <img className='w-full p-4 m-4  rounded-lg border-gray-600 border' src={pet?.petImage} alt="" />
                     <div className='p-4'>

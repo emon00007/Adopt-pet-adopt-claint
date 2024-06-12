@@ -4,8 +4,9 @@ import { useTable, usePagination } from "react-table";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
-const TABLE_HEAD = ["S/N", "Pet Name", "Pet Category", "Pet Image", "Adoption Status", "Actions"];
+const TABLE_HEAD = ["S/N", "Pet Name", "Pet Category", "Pet Image","Adoption Status", "Actions"];
 console.log(TABLE_HEAD);
 const MyAddSection = () => {
     const { user } = useContext(AuthContext);
@@ -76,6 +77,7 @@ const MyAddSection = () => {
                 accessor: "category",
                 Cell: ({ value }) => <div className="text-black">{value}</div>,
             },
+
             {
                 Header: "Pet Image",
                 accessor: "petImage",
@@ -155,6 +157,7 @@ const MyAddSection = () => {
 
     return (
         <div className="container mx-auto p-4">
+            <Helmet><title>MyAddSection</title></Helmet>
             <div className="my-4 text-center ">
                 <h2 className="text-3xl font-semibold  text-gray-900">Pet Listings</h2>
                 <p className="">These are the details about your pet listings</p>
