@@ -29,12 +29,15 @@ const CustomNavbar = () => {
         .then(() => { })
         .catch(error => console.log(error));
 }
+
+
   const navList = (
     <ul tabIndex={0} className="mt-2 mb-4 flex flex-col gap-2 bg-base-100 dropdown-content rounded-box lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <li><NavLink to='/'> <ListItem>Home</ListItem></NavLink></li>
       <li><NavLink to='/Petlisting'><ListItem>Pet Listing</ListItem></NavLink></li>
       <li><NavLink to='/donationCampaignPage'><ListItem>Donation Campaign</ListItem></NavLink></li>
       <li><NavLink to='/dashboard'><ListItem> Dashboard</ListItem></NavLink></li>
+      <li><img className="rounded-full w-14 h-14 border-2 border-blue-700" src={user?.photoURL} alt="" /></li>
 
       {
                 user ? <>
@@ -111,6 +114,7 @@ const CustomNavbar = () => {
 
         </MobileNav>
       </MTNavbar>
+      
 
     </div>
   );

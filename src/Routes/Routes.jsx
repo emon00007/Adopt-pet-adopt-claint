@@ -23,15 +23,17 @@ import DonationDetails from "../PageComponent/DonationSection/DonationCampaigns/
 import MyDonationCampaign from "../PageComponent/MyDonationCampaign/MyDonationCampaign";
 import AllUsers from "../PageComponent/AdminPanel/AllUsers";
 import AllPets from "../PageComponent/AdminPanel/AllPets";
-import ErrorPage from "../PageComponent/ErrorPage/ErrorPage";
+// import ErrorPage from "../PageComponent/ErrorPage/ErrorPage";
 import AllDonates from "../PageComponent/AdminPanel/AllDonates";
+import AdopRequest from "../PageComponent/AdopRequest/AdopRequest";
+import UpdateDonation from "../PageComponent/UpdatePage/UpdateDonation";
 
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <Main></Main>,
-        errorElement:<ErrorPage></ErrorPage>,
+        // errorElement:<ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/',
@@ -55,10 +57,7 @@ export const router = createBrowserRouter([
                 element: <PetDetails></PetDetails>
             },
             
-            {
-                path: '/UpdatePage',
-                element: <UpdatePage></UpdatePage>
-            },
+            
             {
                 path: '/pet/category/dogs',
                 element: <Catagory_dog></Catagory_dog>
@@ -96,7 +95,7 @@ export const router = createBrowserRouter([
     {
         path: "/dashboard",
         element:<Dashboard></Dashboard>,
-        errorElement:<ErrorPage></ErrorPage>,
+        // errorElement:<ErrorPage></ErrorPage>,
         children:[
             {
                 path: 'MyAddSection',
@@ -128,6 +127,21 @@ export const router = createBrowserRouter([
             {
                 path:'allDonates',
                 element:<AllDonates></AllDonates>
+            }
+            ,
+            {
+                path:'adoptRequest',
+                element:<AdopRequest></AdopRequest>
+            },
+            {
+                path: 'UpdatePage/:id',
+                element: <UpdatePage></UpdatePage>,
+                loader: ({params}) => fetch(`http://localhost:5000/petlisting/${params.id}`)
+               
+            },
+            {
+                path:"donationUpdate",
+                element:<UpdateDonation></UpdateDonation>
             }
            
         ]

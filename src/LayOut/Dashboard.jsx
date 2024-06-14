@@ -42,7 +42,8 @@ const Dashboard = () => {
 
                             <li><NavLink className="  font-semibold" to="/"> <ListItem className="gap-2" > <AiOutlineHome className="text-xl"></AiOutlineHome>Go to Page</ListItem></NavLink></li>
 
-                            <li><NavLink className="  font-semibold" > <ListItem className="gap-2"> <IoIosLogOut className="text-xl"></IoIosLogOut>Log Out</ListItem></NavLink></li></>
+                            <li><NavLink className="  font-semibold" > <ListItem className="gap-2"> <IoIosLogOut className="text-xl"></IoIosLogOut>Log Out</ListItem></NavLink></li>
+                            </>
                     }
                 </ul>
             </div>

@@ -22,6 +22,8 @@ const MyAddSection = () => {
 
         fetchData();
     }, [user]);
+    console.log(addpet);
+    console.log(addpet?._id);
 
     const handleAdopt = async (id) => {
 
@@ -113,7 +115,7 @@ const MyAddSection = () => {
                         <button onClick={() => handleDelete(row.original._id)} className="text-red-500 border px-2  rounded-3xl hover:text-red-700">
                             Delete
                         </button>
-                        <Link to='/UpdatePage' className="text-blue-500 border px-2 rounded-3xl hover:text-blue-700">
+                        <Link to={`/dashboard/UpdatePage/${row.original._id}`} className="text-blue-500 border px-2 rounded-3xl hover:text-blue-700">
                             Update
                         </Link>
                         <button

@@ -100,7 +100,7 @@ const Addapet = () => {
                     <div className='md:grid-cols-3 gap-2 grid'>
                         <div className='mt-4 '>
                             <label htmlFor="petName">Pet Name:</label>
-                            <Field className="input border border-brown-100 input-bordered w-full px-4 p-2 rounded  max-w-xs" id="petName" name="petName" placeholder="Pet Name" />
+                            <Field  className="input border border-brown-100 input-bordered w-full px-4 p-2 rounded  max-w-xs" id="petName" name="petName" placeholder="Pet Name" />
                             <ErrorMessage className='text-red-500' name="petName" component="div" />
                         </div>
                         <div className='mt-4'>
@@ -123,7 +123,7 @@ const Addapet = () => {
                     <div className='grid gap-2 md:grid-cols-2'>
                         <div className='mt-4'>
                             <label htmlFor="petLocation">Pet Location :</label>
-                            <Field className="input border border-brown-100 input-bordered w-full px-4 p-2 rounded  " id="petLocation" name="petLocation" placeholder="Pet Location" />
+                            <Field  className="input border border-brown-100 input-bordered w-full px-4 p-2 rounded  " id="petLocation" name="petLocation" placeholder="Pet Location" />
                             <ErrorMessage className='text-red-500' name="petLocation" component="div" />
                         </div>
 

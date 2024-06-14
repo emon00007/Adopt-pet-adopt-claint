@@ -55,7 +55,9 @@ const PetDetails = () => {
             userName: user?.displayName,
             userEmail: user?.email,
             posterEmail:pet?.email,
-            petId:pet?._Id,
+            petId:pet?._id,
+            petName:pet?.petName,
+            petImage:pet?.petImage,
             phoneNumber: phoneNumber,
             location: location,
         };

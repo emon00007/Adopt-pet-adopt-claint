@@ -115,7 +115,7 @@ const MyDonationCampaign = () => {
                         <button onClick={() => handleDelete(row.original._id)} className="text-red-500 border px-2  rounded-3xl hover:text-red-700">
                             Delete
                         </button>
-                        <Link to='/UpdatePage' className="text-blue-500 border px-2 rounded-3xl hover:text-blue-700">
+                        <Link to='donationUpdate' className="text-blue-500 border px-2 rounded-3xl hover:text-blue-700">
                             Update
                         </Link>
                         <button
