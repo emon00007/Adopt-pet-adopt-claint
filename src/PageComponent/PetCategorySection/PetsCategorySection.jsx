@@ -28,7 +28,7 @@ const PetsCategorySection = () => {
                 </Link>
                 <Link to='/pet/Allcategory' className="border shadow-sm">
                     <img className="h-56 mx-auto" src="https://i.ibb.co/zSsxz92/images-1.png" alt="" />
-                    <p>Birds</p>
+                    <p>Allcategory</p>
                 </Link>
 
             </div>

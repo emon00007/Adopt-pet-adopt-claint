@@ -4,9 +4,14 @@ import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { useLocation, useNavigate } from "react-router-dom";
 const SocialLogin = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
     const axiosPublic =useAxiosPublic()
+    
     const {googleSignIn,githubSignIn}=useContext(AuthContext)
+    const from = location.state?.from?.pathname || "/";
     const handelGoogleLogin =()=>{
         googleSignIn()
         .then ((result)=>{
@@ -21,11 +26,14 @@ const SocialLogin = () => {
             axiosPublic.post('/userAdded',userInfo)
             .then(res=>{
                 console.log(res.data)
+                navigate(from, { replace: true });
             })
         })
         .catch((error)=>{
             console.error(error)
         })
+        
+        
     }
 
     const handelgithubLogin =()=>{
@@ -40,6 +48,7 @@ const SocialLogin = () => {
             axiosPublic.post('/userAdded',userInfo)
             .then(res=>{
                 console.log(res.data)
+                navigate(from, { replace: true });
             })
         })
         .catch((error)=>{

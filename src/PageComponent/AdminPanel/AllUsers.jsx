@@ -17,6 +17,7 @@ const AllUsers = () => {
         };
         fetchData();
     }, [axiosSecure]);
+    console.log(allDatas)
 
     const handelMakeAdmin = allData => {
         axiosSecure.patch(`/allUsers/admin/${allData._id}`)
@@ -33,6 +34,7 @@ const AllUsers = () => {
                 }
             })
     }
+
 
 
     return (
@@ -65,19 +67,19 @@ const AllUsers = () => {
                                     <tr key={allData?._id} className="border-b border-opacity-20 dark:border-gray-300 dark:bg-gray-50">
                                         <td className="p-3">{index + 1}</td>
                                         <td className="p-3">
-                                            <p>{allData.name}</p>
+                                            <p>{allData?.name}</p>
                                         </td>
                                         <td className="p-3">
-                                            <p>{allData.email}</p>
+                                            <p>{allData?.email}</p>
 
                                         </td>
                                         <td className="p-3">
-                                            <img className="w-14 h-14 rounded-full" src={allData.photoURL} alt="" />
-
+                                            <img className="w-14 h-14 rounded-full" src={allData?.photoURL} alt="" />
+                                            {console.log(allData.photoURL)}
                                         </td>
                                         <td className="p-3 text-right">
                                             <td className="p-3 text-right">
-                                                {allData.role === 'admin' ? 'Admin' : <Button onClick={() => handelMakeAdmin(allData)} >Make Admin</Button>}
+                                                {allData?.role === 'admin' ? 'Admin' : <Button onClick={() => handelMakeAdmin(allData)} >Make Admin</Button>}
                                             </td>
                                         </td>
 

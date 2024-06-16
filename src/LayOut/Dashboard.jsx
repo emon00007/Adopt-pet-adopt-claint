@@ -8,11 +8,23 @@ import { AiOutlineHome } from "react-icons/ai";
 import { IoIosLogOut } from "react-icons/io";
 import { MdOutlineFeed } from "react-icons/md";
 import { Helmet } from "react-helmet";
+import useAdmin from "../Hooks/useAdmin";
+import { useContext } from "react";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+import useUser from "../Hooks/useUser";
 
 
 
 const Dashboard = () => {
-    const isAdmin =false
+    const [isAdmin] = useAdmin();
+    const [isUser] = useUser()
+    const {LogOut}=useContext(AuthContext)
+    const handleLogOut = () => {
+        LogOut()
+          .then(() => { })
+          .catch((error) => console.log(error));
+      };
+    // console.log(isAdmin)
     return (
 
 
@@ -24,27 +36,44 @@ const Dashboard = () => {
                 </Typography>
                 <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box ">
                     {
-                        isAdmin ? <>
-                            <li ><NavLink className="  font-semibold" to="allUsers"><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>All Users</ListItem></NavLink></li>
+                        isAdmin && <>
+                            <li ><NavLink className="  font-semibold" to="/dashboard/allUsers"><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>All Users</ListItem></NavLink></li>
 
-                            <li ><NavLink className="  font-semibold" to="allPets"><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>All Pets</ListItem></NavLink></li>
-                            <li ><NavLink className="  font-semibold" to="allDonates"><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>All Pets</ListItem></NavLink></li>
-                        </> : <>
-                            <li ><NavLink className="  font-semibold" to="Addapet"><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>Add a Pet</ListItem></NavLink></li>
+                            <li ><NavLink className="  font-semibold" to="/dashboard/allPets"><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>All Pets</ListItem></NavLink></li>
+                            <li ><NavLink className="  font-semibold" to="/dashboard/allDonates"><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>All Pets</ListItem></NavLink></li>
+                            <li ><NavLink className="  font-semibold" to="/dashboard/Addapet"><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>Add a Pet</ListItem></NavLink></li>
 
-                            <li><NavLink className="  font-semibold" to="MyAddSection"> <ListItem className=" gap-2"> <FaTableList className=" text-lg"></FaTableList>My Add Page</ListItem></NavLink></li>
+                            <li><NavLink className="  font-semibold" to="/dashboard/MyAddSection"> <ListItem className=" gap-2"> <FaTableList className=" text-lg"></FaTableList>My Add Page</ListItem></NavLink></li>
 
-                            <li><NavLink className="  font-semibold" to="CreateDonation"> <ListItem className=" gap-2"> <SiMercadopago className="text-2xl"></SiMercadopago>Create Donation Campaign</ListItem></NavLink></li>
+                            <li><NavLink className="  font-semibold" to="/dashboard/CreateDonation"> <ListItem className=" gap-2"> <SiMercadopago className="text-2xl"></SiMercadopago>Create Donation Campaign</ListItem></NavLink></li>
 
-                            <li><NavLink className="  font-semibold" to="adoptRequest"> <ListItem className=" gap-2"> <MdOutlineFeed className="text-2xl"></MdOutlineFeed>Adoption Request</ListItem></NavLink></li>
+                            <li><NavLink className="  font-semibold" to="/dashboard/adoptRequest"> <ListItem className=" gap-2"> <MdOutlineFeed className="text-2xl"></MdOutlineFeed>Adoption Request</ListItem></NavLink></li>
 
-                            <li> <NavLink className="  font-semibold" to="MyDonationCampaign"> <ListItem className=" gap-2"> <FaDonate></FaDonate>My Donation Campaign</ListItem></NavLink></li>
+                            <li> <NavLink className="  font-semibold" to="/dashboard/MyDonationCampaign"> <ListItem className=" gap-2"> <FaDonate></FaDonate>My Donation Campaign</ListItem></NavLink></li>
 
                             <li><NavLink className="  font-semibold" to="/"> <ListItem className="gap-2" > <AiOutlineHome className="text-xl"></AiOutlineHome>Go to Page</ListItem></NavLink></li>
 
                             <li><NavLink className="  font-semibold" > <ListItem className="gap-2"> <IoIosLogOut className="text-xl"></IoIosLogOut>Log Out</ListItem></NavLink></li>
-                            </>
-                    }
+
+                        </>} 
+                           {
+                            !isAdmin&& <>
+                            <li ><NavLink className="  font-semibold" to="/dashboard/Addapet"><ListItem className=" gap-2"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>Add a Pet</ListItem></NavLink></li>
+
+                            <li><NavLink className="  font-semibold" to="/dashboard/MyAddSection"> <ListItem className=" gap-2"> <FaTableList className=" text-lg"></FaTableList>My Add Page</ListItem></NavLink></li>
+
+                            <li><NavLink className="  font-semibold" to="/dashboard/CreateDonation"> <ListItem className=" gap-2"> <SiMercadopago className="text-2xl"></SiMercadopago>Create Donation Campaign</ListItem></NavLink></li>
+
+                            <li><NavLink className="  font-semibold" to="/dashboard/adoptRequest"> <ListItem className=" gap-2"> <MdOutlineFeed className="text-2xl"></MdOutlineFeed>Adoption Request</ListItem></NavLink></li>
+
+                            <li> <NavLink className="  font-semibold" to="/dashboard/MyDonationCampaign"> <ListItem className=" gap-2"> <FaDonate></FaDonate>My Donation Campaign</ListItem></NavLink></li>
+
+                            <li><NavLink className="  font-semibold" to="/"> <ListItem className="gap-2" > <AiOutlineHome className="text-xl"></AiOutlineHome>Go to Page</ListItem></NavLink></li>
+
+                            <li><NavLink onClick={handleLogOut} className="  font-semibold" > <ListItem className="gap-2"> <IoIosLogOut className="text-xl"></IoIosLogOut>Log Out</ListItem></NavLink></li>
+                        </>
+                           }
+                    
                 </ul>
             </div>
             <div className="flex-1 bg-blue-gray-200"><Outlet></Outlet></div>

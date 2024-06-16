@@ -8,6 +8,7 @@ import { Button } from "@material-tailwind/react";
 const AdopRequest = () => {
     const { user } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
+   
     const [adopRequest, setAdopRequest] = useState([]);
     const [adoptChack, setAdoptchack] = useState([]);
 
@@ -15,6 +16,7 @@ const AdopRequest = () => {
         const fetchData = async () => {
             const res = await axiosSecure.get(`/petaddRequest/${user?.email}`);
             setAdopRequest(res.data);
+            console.log(res.data);
         };
         fetchData();
     }, [user, axiosSecure]);
@@ -24,6 +26,7 @@ const AdopRequest = () => {
             .then(res => res.json())
             .then(data => {
                 setAdoptchack(data);
+                // console.log(data)
             });
     }, []);
 
@@ -62,6 +65,7 @@ const AdopRequest = () => {
 
     console.log('adoptChack:', adoptChack);
     console.log('adopRequest:', adopRequest);
+ 
 
     return (
         <div className="container p-2 mx-auto sm:p-4 dark:text-gray-800">

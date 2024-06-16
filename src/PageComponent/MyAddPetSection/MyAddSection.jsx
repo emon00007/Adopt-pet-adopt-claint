@@ -5,35 +5,41 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
-const TABLE_HEAD = ["S/N", "Pet Name", "Pet Category", "Pet Image","Adoption Status", "Actions"];
-console.log(TABLE_HEAD);
 const MyAddSection = () => {
     const { user } = useContext(AuthContext);
     const [addpet, setAddpet] = useState([]);
-
     const { id } = useParams();
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch(`http://localhost:5000/mypetlisting/${user?.email}`);
-            const result = await res.json();
-            setAddpet(result);
-        };
+    const axiosSecure = useAxiosSecure();
 
+    useEffect(() => {
         fetchData();
     }, [user]);
-    console.log(addpet);
-    console.log(addpet?._id);
 
-    const handleAdopt = async (id) => {
+    const fetchData = () => {
+        axiosSecure.get(`/mypetlisting/${user?.email}`)
+            .then(result => {
+                if (Array.isArray(result.data)) {
+                    setAddpet(result.data);
+                } else {
+                    console.error('Expected an array but got:', result.data);
+                }
+            })
+            .catch(error => console.error('Error fetching pet listings:', error));
+    };
 
-        await axios.patch(`http://localhost:5000/adopt/${id}`, { adopted: true });
-        setAddpet((prevPets) =>
-            prevPets.map((pet) =>
-                pet._id === id ? { ...pet, adopted: true } : pet
-            )
-        );
-    }
+    const handleAdopt = (id) => {
+        axios.patch(`http://localhost:5000/adopt/${id}`, { adopted: true })
+            .then(() => {
+                setAddpet(prevPets =>
+                    prevPets.map(pet =>
+                        pet._id === id ? { ...pet, adopted: true } : pet
+                    )
+                );
+            })
+            .catch(error => console.error('Error adopting pet:', error));
+    };
 
     const handleDelete = (_id) => {
         Swal.fire({
@@ -44,12 +50,12 @@ const MyAddSection = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
+        }).then(result => {
             if (result.isConfirmed) {
-
                 axios.delete(`http://localhost:5000/delete/${_id}`)
                     .then(res => {
                         if (res.data.deletedCount > 0) {
+                            setAddpet(prevPets => prevPets.filter(pet => pet._id !== _id));
                             Swal.fire({
                                 title: "Deleted!",
                                 text: "Your file has been deleted.",
@@ -57,9 +63,9 @@ const MyAddSection = () => {
                             });
                         }
                     })
+                    .catch(error => console.error('Error deleting pet:', error));
             }
         });
-
     };
 
     const columns = useMemo(
@@ -79,7 +85,6 @@ const MyAddSection = () => {
                 accessor: "category",
                 Cell: ({ value }) => <div className="text-black">{value}</div>,
             },
-
             {
                 Header: "Pet Image",
                 accessor: "petImage",
@@ -112,7 +117,7 @@ const MyAddSection = () => {
                 accessor: "actions",
                 Cell: ({ row }) => (
                     <div className="flex gap-2">
-                        <button onClick={() => handleDelete(row.original._id)} className="text-red-500 border px-2  rounded-3xl hover:text-red-700">
+                        <button onClick={() => handleDelete(row.original._id)} className="text-red-500 border px-2 rounded-3xl hover:text-red-700">
                             Delete
                         </button>
                         <Link to={`/dashboard/UpdatePage/${row.original._id}`} className="text-blue-500 border px-2 rounded-3xl hover:text-blue-700">
@@ -133,8 +138,6 @@ const MyAddSection = () => {
         []
     );
 
-    const data = useMemo(() => addpet, [addpet]);
-
     const {
         getTableProps,
         getTableBodyProps,
@@ -151,7 +154,7 @@ const MyAddSection = () => {
     } = useTable(
         {
             columns,
-            data,
+            data: addpet,
             initialState: { pageIndex: 0 },
         },
         usePagination
@@ -161,8 +164,8 @@ const MyAddSection = () => {
         <div className="container mx-auto p-4">
             <Helmet><title>MyAddSection</title></Helmet>
             <div className="my-4 text-center ">
-                <h2 className="text-3xl font-semibold  text-gray-900">Pet Listings</h2>
-                <p className="">These are the details about your pet listings</p>
+                <h2 className="text-3xl font-semibold text-gray-900">Pet Listings</h2>
+                <p>These are the details about your pet listings</p>
             </div>
             <div className="overflow-x-auto">
                 <table {...getTableProps()} className="min-w-full bg-white border border-gray-200">
@@ -210,9 +213,9 @@ const MyAddSection = () => {
                     Previous
                 </button>
                 <div className="flex items-center space-x-2">
-                    {pageOptions.map((option) => (
+                    {pageOptions.map((option,index) => (
                         <button
-                            key={option}
+                            key={index}
                             onClick={() => gotoPage(option)}
                             className={`px-4 py-2 text-sm font-medium rounded-md ${option === pageIndex ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                                 }`}

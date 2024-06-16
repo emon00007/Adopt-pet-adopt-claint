@@ -6,7 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
 
-const TABLE_HEAD = ["S/N", "Pet Name", "Pet Category", "Pet Image", "Adoption Status", "Actions"];
+const TABLE_HEAD = ["S/N", "Pet Name", "Pet Category", "Pet Image", "max Donation", "Donation Progress", "Actions"];
 console.log(TABLE_HEAD);
 
 
@@ -18,7 +18,7 @@ const MyDonationCampaign = () => {
     const { id } = useParams();
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch(`http://localhost:5000/mypetlisting/${user?.email}`);
+            const res = await fetch(`http://localhost:5000/donation/${user?.email}`);
             const result = await res.json();
             setAddpet(result);
         };
@@ -26,42 +26,34 @@ const MyDonationCampaign = () => {
         fetchData();
     }, [user]);
 
-    const handleAdopt = async (id) => {
+    console.log(addpet)
 
-        await axios.patch(`http://localhost:5000/adopt/${id}`, { adopted: true });
-        setAddpet((prevPets) =>
-            prevPets.map((pet) =>
-                pet._id === id ? { ...pet, adopted: true } : pet
-            )
-        );
-    }
+    // const handleDelete = (_id) => {
+    //     Swal.fire({
+    //         title: "Are you sure?",
+    //         text: "You won't be able to revert this!",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Yes, delete it!"
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
 
-    const handleDelete = (_id) => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
+    //             axios.delete(`http://localhost:5000/delete/${_id}`)
+    //                 .then(res => {
+    //                     if (res.data.deletedCount > 0) {
+    //                         Swal.fire({
+    //                             title: "Deleted!",
+    //                             text: "Your file has been deleted.",
+    //                             icon: "success"
+    //                         });
+    //                     }
+    //                 })
+    //         }
+    //     });
 
-                axios.delete(`http://localhost:5000/delete/${_id}`)
-                    .then(res => {
-                        if (res.data.deletedCount > 0) {
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Your file has been deleted.",
-                                icon: "success"
-                            });
-                        }
-                    })
-            }
-        });
-
-    };
+    // };
 
     const columns = useMemo(
         () => [
@@ -81,6 +73,32 @@ const MyDonationCampaign = () => {
                 Cell: ({ value }) => <div className="text-black">{value}</div>,
             },
             {
+                Header: "max Donation",
+                accessor: "max Donation",
+                Cell: ({ value }) => (
+                    <div className="flex items-center gap-3">
+                        <img
+                            src={value}
+                            alt="Pet"
+                            className="w-12 h-12 rounded-full object-cover"
+                        />
+                    </div>
+                ),
+            },
+            {
+                Header: "Donation Progress",
+                accessor: "Donation Progress",
+                Cell: ({ value }) => (
+                    <div className="flex items-center gap-3">
+                        <img
+                            src={value}
+                            alt="Pet"
+                            className="w-12 h-12 rounded-full object-cover"
+                        />
+                    </div>
+                ),
+            },
+            {
                 Header: "Pet Image",
                 accessor: "petImage",
                 Cell: ({ value }) => (
@@ -93,39 +111,31 @@ const MyDonationCampaign = () => {
                     </div>
                 ),
             },
+
+
             {
-                Header: "Adoption Status",
-                accessor: "adopted",
-                Cell: ({ value }) => (
-                    <span
-                        className={`px-2 py-1 rounded-full text-xs font-semibold ${value
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
-                            }`}
-                    >
-                        {value ? "Adopted" : "Not Adopted"}
-                    </span>
+                Header: "Pause",
+                accessor: "Pause",
+                Cell: ({ row }) => (
+                    <div className="flex gap-2">
+                        <button className="text-red-500 border px-2  rounded-3xl hover:text-red-700">
+                            Pause
+                        </button>
+
+
+                    </div>
                 ),
             },
             {
-                Header: "Actions",
+                Header: "Update",
                 accessor: "actions",
                 Cell: ({ row }) => (
                     <div className="flex gap-2">
-                        <button onClick={() => handleDelete(row.original._id)} className="text-red-500 border px-2  rounded-3xl hover:text-red-700">
-                            Delete
-                        </button>
-                        <Link to='donationUpdate' className="text-blue-500 border px-2 rounded-3xl hover:text-blue-700">
+ 
+                        <Link to={`/dashboard/donationUpdate/${row.original._id}`} className="text-blue-500 border px-2 rounded-3xl hover:text-blue-700">
                             Update
                         </Link>
-                        <button
-                            onClick={() => handleAdopt(row.original._id)}
-                            className={`text-green-500 border px-2 rounded-3xl hover:text-green-700 ${row.original.adopted ? "opacity-50 cursor-not-allowed" : ""
-                                }`}
-                            disabled={row.original.adopted}
-                        >
-                            Adopt
-                        </button>
+
                     </div>
                 ),
             },
