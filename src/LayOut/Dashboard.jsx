@@ -11,13 +11,12 @@ import { Helmet } from "react-helmet";
 import useAdmin from "../Hooks/useAdmin";
 import { useContext } from "react";
 import { AuthContext } from "../AuthProvider/AuthProvider";
-import useUser from "../Hooks/useUser";
+
 
 
 
 const Dashboard = () => {
     const [isAdmin] = useAdmin();
-    const [isUser] = useUser()
     const {LogOut}=useContext(AuthContext)
     const handleLogOut = () => {
         LogOut()

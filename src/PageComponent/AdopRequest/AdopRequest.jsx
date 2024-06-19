@@ -4,11 +4,12 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { RxCross1 } from "react-icons/rx";
 import { BiSolidSelectMultiple } from "react-icons/bi";
 import { Button } from "@material-tailwind/react";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const AdopRequest = () => {
     const { user } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
-   
+   const axiosPublic=useAxiosPublic()
     const [adopRequest, setAdopRequest] = useState([]);
     const [adoptChack, setAdoptchack] = useState([]);
 
@@ -26,9 +27,9 @@ const AdopRequest = () => {
             .then(res => res.json())
             .then(data => {
                 setAdoptchack(data);
-                // console.log(data)
             });
     }, []);
+
 
     const handleAdopt = async (adopReq) => {
         console.log('Handle Adopt Clicked');
@@ -65,6 +66,8 @@ const AdopRequest = () => {
 
     console.log('adoptChack:', adoptChack);
     console.log('adopRequest:', adopRequest);
+    console.log(adoptChack);
+    console.log(adopRequest);
  
 
     return (

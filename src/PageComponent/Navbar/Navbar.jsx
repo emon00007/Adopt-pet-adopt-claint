@@ -14,18 +14,19 @@ import {
   Button,
   Menu,
   MenuHandler,
-  MenuList,
+  MenuList
 } from "@material-tailwind/react";
 import useAdmin from "../../Hooks/useAdmin";
 import useUser from "../../Hooks/useUser";
+// import {} from "@material-tailwind/react";
 
 
 
 
 
 function AvatarWithUserDropdown() {
-  const [isAdmin,isAdminLoading] = useAdmin()
-  const [isUser]=useUser()
+  const [isAdmin, isAdminLoading] = useAdmin()
+  const [isUser] = useUser()
   const { LogOut, user } = useContext(AuthContext)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -59,13 +60,13 @@ function AvatarWithUserDropdown() {
       <MenuList className="p-1">
 
         {
-          isAdmin &&!isAdminLoading&&<NavLink to="/dashboard/allUsers">
+          isAdmin && !isAdminLoading && <NavLink to="/dashboard/allUsers">
             <ListItem>Dashboard</ListItem>
           </NavLink>
         }
         {
 
-          !isAdmin&&<NavLink to="/dashboard/Addapet">
+          !isAdmin && <NavLink to="/dashboard/Addapet">
             <ListItem>User Dashboard </ListItem>
           </NavLink>
         }
@@ -116,6 +117,7 @@ const CustomNavbar = () => {
           <ListItem>Donation Campaign</ListItem>
         </NavLink>
       </li>
+
 
 
     </ul>

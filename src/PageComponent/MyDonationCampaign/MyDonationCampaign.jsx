@@ -1,66 +1,36 @@
-import { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useTable, usePagination } from "react-table";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom";
-import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { MdViewKanban } from "react-icons/md";
 
-const TABLE_HEAD = ["S/N", "Pet Name", "Pet Category", "Pet Image", "max Donation", "Donation Progress", "Actions"];
-console.log(TABLE_HEAD);
-
-
+const TABLE_HEAD = ["S/N", "Pet Name", "Pet Category", "Pet Image", "Max Donation", "Donation Progress", "Actions"];
 
 const MyDonationCampaign = () => {
     const { user } = useContext(AuthContext);
-    const [addpet, setAddpet] = useState([]);
+    const axiosSecure = useAxiosSecure();
+    const [data, setData] = useState([]);
+    const { data: info = [],  } = useQuery({
+        queryKey: [user?.email],
+        queryFn: async () => {
+            const { data } = await axiosSecure.get(`/donation/${user?.email}`);
+            return data;
+        }
+    });
 
-    const { id } = useParams();
     useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch(`http://localhost:5000/donation/${user?.email}`);
-            const result = await res.json();
-            setAddpet(result);
-        };
+        setData(info);
+    }, [info]);
 
-        fetchData();
-    }, [user]);
-
-    console.log(addpet)
-
-    // const handleDelete = (_id) => {
-    //     Swal.fire({
-    //         title: "Are you sure?",
-    //         text: "You won't be able to revert this!",
-    //         icon: "warning",
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#3085d6",
-    //         cancelButtonColor: "#d33",
-    //         confirmButtonText: "Yes, delete it!"
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-
-    //             axios.delete(`http://localhost:5000/delete/${_id}`)
-    //                 .then(res => {
-    //                     if (res.data.deletedCount > 0) {
-    //                         Swal.fire({
-    //                             title: "Deleted!",
-    //                             text: "Your file has been deleted.",
-    //                             icon: "success"
-    //                         });
-    //                     }
-    //                 })
-    //         }
-    //     });
-
-    // };
-
-    const columns = useMemo(
+    const columns = React.useMemo(
         () => [
             {
                 Header: "S/N",
                 accessor: (row, i) => i + 1,
-                Cell: ({ value }) => <div className="text-black">{value}</div>,
+                Cell: ({ value }) => <div className="text-black">{value}.</div>,
             },
             {
                 Header: "Pet Name",
@@ -71,32 +41,6 @@ const MyDonationCampaign = () => {
                 Header: "Pet Category",
                 accessor: "category",
                 Cell: ({ value }) => <div className="text-black">{value}</div>,
-            },
-            {
-                Header: "max Donation",
-                accessor: "max Donation",
-                Cell: ({ value }) => (
-                    <div className="flex items-center gap-3">
-                        <img
-                            src={value}
-                            alt="Pet"
-                            className="w-12 h-12 rounded-full object-cover"
-                        />
-                    </div>
-                ),
-            },
-            {
-                Header: "Donation Progress",
-                accessor: "Donation Progress",
-                Cell: ({ value }) => (
-                    <div className="flex items-center gap-3">
-                        <img
-                            src={value}
-                            alt="Pet"
-                            className="w-12 h-12 rounded-full object-cover"
-                        />
-                    </div>
-                ),
             },
             {
                 Header: "Pet Image",
@@ -111,39 +55,47 @@ const MyDonationCampaign = () => {
                     </div>
                 ),
             },
-
-
             {
-                Header: "Pause",
-                accessor: "Pause",
+                Header: "Max Donation",
+                accessor: "maxDonate",
+                Cell: ({ value }) => <div className="text-black">{value}</div>,
+            },
+            
+            {
+                Header: "View Donation",
+                accessor: "viewDonation",
+                Cell: ({ value }) => <div className="text-black text-2xl">{value} <MdViewKanban></MdViewKanban></div>,
+            },
+            {
+                Header: "Donation Progress",
+                accessor: "donationProgress",
+                Cell: ({ value }) => <div className="text-black">{value}%</div>,
+            },
+            {
+                Header: "Edit",
+                accessor: "actions",
                 Cell: ({ row }) => (
                     <div className="flex gap-2">
-                        <button className="text-red-500 border px-2  rounded-3xl hover:text-red-700">
-                            Pause
-                        </button>
-
-
+                        <Link to={`/dashboard/donationUpdate/${row.original._id}`} className="text-blue-500 border px-2 rounded-3xl hover:text-blue-700">
+                            Update
+                        </Link>
                     </div>
                 ),
             },
             {
-                Header: "Update",
-                accessor: "actions",
+                Header: "Pause",
+                accessor: "pause",
                 Cell: ({ row }) => (
                     <div className="flex gap-2">
- 
                         <Link to={`/dashboard/donationUpdate/${row.original._id}`} className="text-blue-500 border px-2 rounded-3xl hover:text-blue-700">
-                            Update
+                        Pause
                         </Link>
-
                     </div>
                 ),
             },
         ],
         []
     );
-
-    const data = useMemo(() => addpet, [addpet]);
 
     const {
         getTableProps,
@@ -167,15 +119,12 @@ const MyDonationCampaign = () => {
         usePagination
     );
 
-
-
-
     return (
         <div className="container mx-auto p-4">
             <Helmet><title>MyCampaign</title></Helmet>
-            <div className="my-4 text-center ">
-                <h2 className="text-3xl font-semibold  text-gray-900">Pet Listings</h2>
-                <p className="">These are the details about your pet listings</p>
+            <div className="my-4 text-center">
+                <h2 className="text-3xl font-semibold text-gray-900">Donation Details List</h2>
+                <p>These are the details about your Donation list</p>
             </div>
             <div className="overflow-x-auto">
                 <table {...getTableProps()} className="min-w-full bg-white border border-gray-200">

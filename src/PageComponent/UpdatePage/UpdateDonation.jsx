@@ -53,7 +53,7 @@ const UpdateDonation = () => {
             const formData = new FormData();
             formData.append('image', file);
 
-            const res = await axios.post(image_hosting_api, formData);
+            const res = await axiosSecure.post(image_hosting_api, formData);
             setImageUrl(res.data.data.url);
         } catch (error) {
             console.error("Error uploading image:", error);

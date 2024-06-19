@@ -12,9 +12,9 @@ import {
 import { Helmet } from 'react-helmet';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import Swal from 'sweetalert2';
 
 const PetDetails = () => {
-    const axiosPublic= useAxiosPublic()
     const { user } = useContext(AuthContext);
     const { id } = useParams();
     const [pet, setPet] = useState(null);
@@ -22,7 +22,7 @@ const PetDetails = () => {
     const [open, setOpen] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState('');
     const [location, setLocation] = useState('');
-
+const axiosPublic =useAxiosPublic()
     const handleOpen = () => setOpen(!open);
 
     useEffect(() => {
@@ -64,6 +64,13 @@ const PetDetails = () => {
         axiosPublic.post('/petaddRequest',requestData)
         .then(res=>{
             console.log(res.data);
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your work has been saved",
+                showConfirmButton: false,
+                timer: 1500
+              });
         })
           
     }

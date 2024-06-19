@@ -1,11 +1,13 @@
 import { useContext, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 import Select from 'react-select';
 import { Button } from '@material-tailwind/react';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import { Helmet } from 'react-helmet';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const petCategories = [
     { value: 'dog', label: 'Dog' },
@@ -19,7 +21,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 const Addapet = () => {
     const { user } = useContext(AuthContext)
-
+const axiosSecure =useAxiosSecure()
     const [imageUrl, setImageUrl] = useState('');
 
 
@@ -66,10 +68,16 @@ const Addapet = () => {
             addedDate: new Date().toISOString(),
         };
 
-        const addpet = await axios.post('http://localhost:5000/addpet', petData);
+        const addpet = await axiosSecure.post('/addpet', petData);
         console.log(addpet.data)
         if (addpet.data) {
-            alert('Pet added successfully!');
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Pet added on Pet List",
+                showConfirmButton: false,
+                timer: 1500
+              });
             resetForm();
             setImageUrl('');
         }

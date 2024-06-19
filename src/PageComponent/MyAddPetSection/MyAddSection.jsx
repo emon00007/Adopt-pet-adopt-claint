@@ -1,8 +1,7 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { useTable, usePagination } from "react-table";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
@@ -10,7 +9,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 const MyAddSection = () => {
     const { user } = useContext(AuthContext);
     const [addpet, setAddpet] = useState([]);
-    const { id } = useParams();
+
     const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
@@ -30,13 +29,20 @@ const MyAddSection = () => {
     };
 
     const handleAdopt = (id) => {
-        axios.patch(`http://localhost:5000/adopt/${id}`, { adopted: true })
+        axiosSecure.patch(`/adopt/${id}`, { adopted: true })
             .then(() => {
                 setAddpet(prevPets =>
                     prevPets.map(pet =>
                         pet._id === id ? { ...pet, adopted: true } : pet
                     )
                 );
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Your Pets Adopets success",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             })
             .catch(error => console.error('Error adopting pet:', error));
     };
@@ -52,7 +58,7 @@ const MyAddSection = () => {
             confirmButtonText: "Yes, delete it!"
         }).then(result => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/delete/${_id}`)
+                axiosSecure.delete(`/delete/${_id}`)
                     .then(res => {
                         if (res.data.deletedCount > 0) {
                             setAddpet(prevPets => prevPets.filter(pet => pet._id !== _id));
@@ -102,13 +108,23 @@ const MyAddSection = () => {
                 Header: "Adoption Status",
                 accessor: "adopted",
                 Cell: ({ value }) => (
+                    // <span
+                    //     className={`px-2 py-1 rounded-full text-xs font-semibold ${value
+                    //         ? "bg-green-100 text-green-800"
+                    //         : "bg-red-100 text-red-800"
+                    //         }`}
+                    // >
+                    //     {value ? "Adopted" : "Not Adopted"}
+                    // </span>
                     <span
-                        className={`px-2 py-1 rounded-full text-xs font-semibold ${value
+                        className={`px-2 py-1 rounded-full text-xs font-semibold ${value === true
                             ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
+                            : value === "reject"
+                                ? "bg-red-100 text-red-800"
+                                : "bg-yellow-500 text-black"
                             }`}
                     >
-                        {value ? "Adopted" : "Not Adopted"}
+                        {value === true ? "Adopted" : value === "reject" ? "Rejected" : "Not Adopted"}
                     </span>
                 ),
             },
@@ -213,7 +229,7 @@ const MyAddSection = () => {
                     Previous
                 </button>
                 <div className="flex items-center space-x-2">
-                    {pageOptions.map((option,index) => (
+                    {pageOptions.map((option, index) => (
                         <button
                             key={index}
                             onClick={() => gotoPage(option)}

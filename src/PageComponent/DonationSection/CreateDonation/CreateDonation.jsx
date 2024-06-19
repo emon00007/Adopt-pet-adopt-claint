@@ -7,6 +7,7 @@ import { Button } from '@material-tailwind/react';
 import { AuthContext } from '../../../AuthProvider/AuthProvider';
 import Swal from 'sweetalert2';
 import { Helmet } from 'react-helmet';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 
 
 const petCategories = [
@@ -18,7 +19,7 @@ const petCategories = [
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const CreateDonation = () => {
-
+const axiosSecure=useAxiosSecure()
     const { user } = useContext(AuthContext)
 
     const [imageUrl, setImageUrl] = useState('');
@@ -70,7 +71,7 @@ const CreateDonation = () => {
             addedDate: new Date().toISOString(),
         };
 
-        const donation = await axios.post('http://localhost:5000/donation', donateData);
+        const donation = await axiosSecure.post('/donation', donateData);
         console.log(donation.data)
         Swal.fire({
             position: "top-end",

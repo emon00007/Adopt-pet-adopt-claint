@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import { Button } from "@material-tailwind/react";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -22,7 +22,7 @@ const UpdatePage = () => {
     const axiosSecure = useAxiosSecure();
     const [imageUrl, setImageUrl] = useState(petImage);
     const [categoryOption, setCategoryOption] = useState(petCategories.find(cat => cat.value === category));
-    const { id } = useParams();
+
 
     const { register, handleSubmit, setValue } = useForm({
  
