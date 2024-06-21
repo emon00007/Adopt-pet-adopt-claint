@@ -12,6 +12,7 @@ import { Helmet } from "react-helmet";
 import { Link, } from "react-router-dom";
 
 import Select from 'react-select';
+import Loder from "../Loder";
 
 
 const options = [
@@ -39,21 +40,20 @@ const Petlisting = () => {
         if (searchTerm) {
             url += selectedOption.value ? `&search=${searchTerm}` : `?search=${searchTerm}`;
         }
-
+    
         fetch(url)
-       
-                .then(res=>res.json())
-           
+            .then(res => res.json())
             .then(data => {
+                data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 setPets(data);
                 setIsLoading(false);
             })
             .catch(error => {
-                console.error( error);
-                // setError(error);
+                console.error(error);
                 setIsLoading(false);
             });
     }, [selectedOption, searchTerm]);
+    
 console.log(selectedOption,searchTerm);
     return (
         <div className="p-4">
@@ -62,6 +62,7 @@ console.log(selectedOption,searchTerm);
                 <Select
                     defaultValue={selectedOption}
                     onChange={setSelectedOption}
+                    
                     options={options}
                     className="w-1/3 mr-4"
                 />
@@ -74,7 +75,7 @@ console.log(selectedOption,searchTerm);
                 />
             </div>
 
-            {isLoading && <p>Loading...</p>}
+            {isLoading && <Loder></Loder>}
             
 
             <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-10  ">

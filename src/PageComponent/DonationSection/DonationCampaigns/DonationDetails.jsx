@@ -2,11 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
     Button,
-
     Dialog,
-
     DialogBody,
-
     Typography,
 } from "@material-tailwind/react";
 import { Helmet } from 'react-helmet';
@@ -15,6 +12,8 @@ import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPR_PUBSHABLEKEY);
 import { Elements } from "@stripe/react-stripe-js";
 import ChackOut from './ChackOut';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
 // import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 
 
@@ -28,26 +27,21 @@ const DonationDetails = () => {
     const { id } = useParams();
     const handleOpen = () => setOpen(!open);
     // const axiosPublic = useAxiosPublic()
+    const axiosSecure= useAxiosSecure()
+
+    const { data: info = [],  } = useQuery({
+        queryKey: [id],
+        queryFn: async () => {
+            const { data } = await axiosSecure.get(`/donationCampaign/${id}`);
+            return data;
+        }
+    });
     useEffect(() => {
-        setIsLoading(true);
+        setIsLoading(false)
+        setDonatePet(info)
+       
 
-        fetch(`http://localhost:5000/donationCampaign/${id}`)
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return res.json();
-            })
-            .then(data => {
-                setDonatePet(data);
-                setIsLoading(false);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-
-                setIsLoading(false);
-            });
-    }, [id]);
+    }, [info]);
     console.log(donatePet);
 
 
@@ -80,10 +74,10 @@ const DonationDetails = () => {
                             Date & time:{donatePet?.addedDate}
                         </Typography>
                         <div className="mb-4 flex w-full items-center gap-3 md:w-1/2 ">
-                            <Button onClick={handleOpen} color="gray" className="w-52">
+
+                            <Button onClick={handleOpen} disabled={donatePet?.status===true || parseFloat(donatePet?.maxDonate) <= donatePet?.donate}  color="gray" className="w-52">
                                 Donate Now
                             </Button>
-
                         </div>
                     </div>
                 </div>
@@ -98,8 +92,8 @@ const DonationDetails = () => {
                     </div>
                     <div className='grid  '>
 
-                        <Elements stripe={stripePromise}>
-                            <ChackOut handleOpen={handleOpen} />
+                        <Elements stripe={stripePromise} >
+                            <ChackOut handleOpen={handleOpen} open={open} donatePet={donatePet}/>
                         </Elements>
                     </div>
                 </DialogBody>

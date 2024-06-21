@@ -23,7 +23,7 @@ import DonationDetails from "../PageComponent/DonationSection/DonationCampaigns/
 import MyDonationCampaign from "../PageComponent/MyDonationCampaign/MyDonationCampaign";
 import AllUsers from "../PageComponent/AdminPanel/AllUsers";
 import AllPets from "../PageComponent/AdminPanel/AllPets";
-// import ErrorPage from "../PageComponent/ErrorPage/ErrorPage";
+import ErrorPage from "../PageComponent/ErrorPage/ErrorPage";
 import AllDonates from "../PageComponent/AdminPanel/AllDonates";
 import AdopRequest from "../PageComponent/AdopRequest/AdopRequest";
 import UpdateDonation from "../PageComponent/UpdatePage/UpdateDonation";
@@ -34,7 +34,7 @@ export const  router = createBrowserRouter([
     {
         path: "/",
         element: <Main></Main>,
-        // errorElement:<ErrorPage></ErrorPage>,
+        errorElement:<ErrorPage></ErrorPage>,
         children: [
             {
                 path: '/',
@@ -96,7 +96,7 @@ export const  router = createBrowserRouter([
     {
         path: "/dashboard",
         element:<Dashboard></Dashboard>,
-        // errorElement:<ErrorPage></ErrorPage>,
+        errorElement:<ErrorPage></ErrorPage>,
         children:[
             {
                 path: 'MyAddSection',
@@ -141,10 +141,22 @@ export const  router = createBrowserRouter([
                
             },
             {
+                path: '/dashboard/allPets/UpdatePage/:id',
+                element: <UpdatePage></UpdatePage>,
+                loader: ({params}) => fetch(`http://localhost:5000/petlisting/${params.id}`)
+               
+            },
+            {
                 path:"donationUpdate/:id",
                 element:<UpdateDonation></UpdateDonation>,
                 loader: ({params}) => fetch(`http://localhost:5000/donationUpdate/${params.id}`)
-            }
+            },
+            {
+                path:"/dashboard/allDonates/UpdatePage/:id",
+                element:<UpdateDonation></UpdateDonation>,
+                loader: ({params}) => fetch(`http://localhost:5000/donationUpdate/${params.id}`)
+            },
+            
            
         ]
     }

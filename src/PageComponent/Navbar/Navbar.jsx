@@ -5,6 +5,7 @@ import {
   Typography,
   IconButton,
   ListItem,
+  Switch,
 } from "@material-tailwind/react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
@@ -29,6 +30,7 @@ function AvatarWithUserDropdown() {
   const [isUser] = useUser()
   const { LogOut, user } = useContext(AuthContext)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
 
   const closeMenu = () => setIsMenuOpen(false);
   const handleLogOut = () => {
@@ -85,6 +87,7 @@ function AvatarWithUserDropdown() {
 const CustomNavbar = () => {
   const [openNav, setOpenNav] = useState(false);
   const { user } = useContext(AuthContext);
+  
 
   useEffect(() => {
     const handleResize = () => {
@@ -103,18 +106,35 @@ const CustomNavbar = () => {
       className="mt-2 mb-4 flex flex-col gap-2 bg-base-100 dropdown-content rounded-box lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6"
     >
       <li>
-        <NavLink to="/">
-          <ListItem>Home</ListItem>
+      <Switch
+          id="custom-switch-component"
+          ripple={false}
+          onChange={toggleDarkMode}
+          className="h-full w-full checked:bg-[#2ec946]"
+          containerProps={{
+            className: "w-11 h-6",
+          }}
+          checked={darkMode} 
+          
+          circleProps={{
+            className: "before:hidden left-0.5 border-none",
+          }}
+        />
+      </li>
+      <li>
+       
+        <NavLink className={({ isActive }) => isActive ? 'text-blue-800 border-black border rounded-xl px-5 py-3 bg-blue-gray-200' : 'font-normal'} to="/">
+          Home
         </NavLink>
       </li>
       <li>
-        <NavLink to="/Petlisting">
-          <ListItem>Pet Listing</ListItem>
+        <NavLink className={({ isActive }) => isActive ? 'text-blue-800 border-black border rounded-xl px-5 py-3 bg-blue-gray-200' : 'font-normal'} to="/Petlisting">
+          Pet Listing
         </NavLink>
       </li>
       <li>
-        <NavLink to="/donationCampaignPage">
-          <ListItem>Donation Campaign</ListItem>
+        <NavLink className={({ isActive }) => isActive ? 'text-blue-800 border-black border rounded-xl px-5 py-3 bg-blue-gray-200' : 'font-normal'} to="/donationCampaignPage">
+          Donation Campaign
         </NavLink>
       </li>
 

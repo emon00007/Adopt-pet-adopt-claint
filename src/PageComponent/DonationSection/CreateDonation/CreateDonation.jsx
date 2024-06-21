@@ -33,7 +33,7 @@ const axiosSecure=useAxiosSecure()
         shortDescription: '',
         longDescription: '',
         maxDonate: '',
-        adopted: false,
+        status: false,
     };
 
     const validationSchema = Yup.object({
@@ -67,6 +67,7 @@ const axiosSecure=useAxiosSecure()
             email: email,
             userName: userName,
             photoURL: photoURL,
+            donate:0,
 
             addedDate: new Date().toISOString(),
         };
@@ -96,7 +97,7 @@ const axiosSecure=useAxiosSecure()
                 {({ setFieldValue, isSubmitting, errors }) => (
                     <Form className='m-4 border p-2 shadow-lg bg-gray-100 rounded-md '>
                         <div className='text-center my-5 text-4xl font-bold'>
-                            <h1>Add a New Pet</h1>
+                            <h1>Add a New Campain</h1>
                         </div>
                         <div className='shadow-md px-2 '>
 
@@ -148,7 +149,7 @@ const axiosSecure=useAxiosSecure()
                         <div className='grid gap-2 md:grid-cols-2'>
                             <div className='items-center mt-4'>
                                 <label htmlFor="">Max Donation Amount:</label>
-                                <Field className="input border border-brown-100 input-bordered w-full px-4 p-2 rounded  " id="maxDonate" name="maxDonate" placeholder="Max Donate" />
+                                <Field className="input border border-brown-100 input-bordered w-full px-4 p-2 rounded" id="maxDonate" name="maxDonate" placeholder="Max Donate" />
                                 <ErrorMessage className='text-red-500' name="maxDonate" component="div" />
                             </div>
                             <div className='items-center mt-4'>

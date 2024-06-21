@@ -77,7 +77,7 @@ const UpdateDonation = () => {
         <div className="mt-3">
             <Helmet><title>Update Donate Page</title></Helmet>
             <div className="m-5">
-                <h1 className="text-center text-2xl font-bold">Update Pet</h1>
+                <h1 className="text-center text-2xl font-bold">Update Donate Page</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div>
                         <div className='shadow-md px-2 '>
@@ -187,7 +187,7 @@ const UpdateDonation = () => {
                         </div>
 
                         <div className='mt-4 ml-10'>
-                            <Button type="submit">
+                            <Button  type="submit">
                                 Update Donate Details
                             </Button>
                         </div>

@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { MdViewKanban } from "react-icons/md";
+import { Button, Progress } from "@material-tailwind/react";
 
 const TABLE_HEAD = ["S/N", "Pet Name", "Pet Category", "Pet Image", "Max Donation", "Donation Progress", "Actions"];
 
@@ -13,17 +14,33 @@ const MyDonationCampaign = () => {
     const { user } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
     const [data, setData] = useState([]);
-    const { data: info = [],  } = useQuery({
+
+    const { data: info = [], refetch } = useQuery({
         queryKey: [user?.email],
         queryFn: async () => {
-            const { data } = await axiosSecure.get(`/donation/${user?.email}`);
-            return data;
-        }
+            try {
+                const { data } = await axiosSecure.get(`/donation/${user?.email}`);
+                setData(data); // Update state directly here
+                return data;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return []; // Return an empty array or handle error state
+            }
+        },
     });
 
-    useEffect(() => {
-        setData(info);
-    }, [info]);
+    const handleUpdateStatus = async (id, newStatus) => {
+        try {
+            await axiosSecure.patch(`/campaign/${id}`, { status: newStatus });
+            const updatedData = data.map(item =>
+                item._id === id ? { ...item, status: newStatus } : item
+            );
+            setData(updatedData);
+            await refetch();
+        } catch (error) {
+            console.error('Error updating status:', error);
+        }
+    }
 
     const columns = React.useMemo(
         () => [
@@ -60,17 +77,32 @@ const MyDonationCampaign = () => {
                 accessor: "maxDonate",
                 Cell: ({ value }) => <div className="text-black">{value}</div>,
             },
-            
             {
                 Header: "View Donation",
                 accessor: "viewDonation",
-                Cell: ({ value }) => <div className="text-black text-2xl">{value} <MdViewKanban></MdViewKanban></div>,
+                Cell: ({ row }) => (
+                    <div className="text-black text-2xl">
+                        {row.original.viewDonation} {/* Display the value here */}
+                        <Link >
+                            <MdViewKanban />
+                        </Link>
+                    </div>
+                ),
             },
+            
             {
                 Header: "Donation Progress",
                 accessor: "donationProgress",
-                Cell: ({ value }) => <div className="text-black">{value}%</div>,
+                Cell: ({ row }) => (
+                    <div className="text-black">
+                        {/* Assuming 'donate' and 'maxDonate' are properties of row.original */}
+                        {/* Calculate donation progress */}
+                        <Progress value={(row.original.donate * parseFloat(row.original.maxDonate)) / 100} />
+                    </div>
+                ),
             },
+            
+
             {
                 Header: "Edit",
                 accessor: "actions",
@@ -83,18 +115,26 @@ const MyDonationCampaign = () => {
                 ),
             },
             {
-                Header: "Pause",
-                accessor: "pause",
+                Header: "Pause/Resume",
+                accessor: "status", // Assuming 'status' is the key in your data that indicates if it's paused
                 Cell: ({ row }) => (
                     <div className="flex gap-2">
-                        <Link to={`/dashboard/donationUpdate/${row.original._id}`} className="text-blue-500 border px-2 rounded-3xl hover:text-blue-700">
-                        Pause
-                        </Link>
+                        {row.original.status ? (
+                            // If status is true (paused), show the Resume button
+                            <Button onClick={() => handleUpdateStatus(row.original._id, false)}>
+                                Resume
+                            </Button>
+                        ) : (
+                            // If status is false (not paused), show the Pause button
+                            <Button onClick={() => handleUpdateStatus(row.original._id, true)}>
+                                Pause
+                            </Button>
+                        )}
                     </div>
                 ),
             },
         ],
-        []
+        [data, refetch] // Ensure refetch function is included in dependencies
     );
 
     const {
