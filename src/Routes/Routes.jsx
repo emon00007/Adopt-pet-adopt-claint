@@ -27,6 +27,7 @@ import ErrorPage from "../PageComponent/ErrorPage/ErrorPage";
 import AllDonates from "../PageComponent/AdminPanel/AllDonates";
 import AdopRequest from "../PageComponent/AdopRequest/AdopRequest";
 import UpdateDonation from "../PageComponent/UpdatePage/UpdateDonation";
+import PaymentDetails from "../PageComponent/Payment/PaymentDetails";
 
 
 export const  router = createBrowserRouter([
@@ -156,7 +157,11 @@ export const  router = createBrowserRouter([
                 element:<UpdateDonation></UpdateDonation>,
                 loader: ({params}) => fetch(`http://localhost:5000/donationUpdate/${params.id}`)
             },
-            
+            {
+                path:'paymentDetails/:id',
+                element:<PaymentDetails></PaymentDetails>,
+                // loader: ({params}) => fetch(`http://localhost:5000/Payment/${params.id}`)
+            }
            
         ]
     }

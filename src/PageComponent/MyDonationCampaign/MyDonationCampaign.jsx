@@ -7,11 +7,12 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { MdViewKanban } from "react-icons/md";
 import { Button, Progress } from "@material-tailwind/react";
+import Loder from "../Loder";
 
 const TABLE_HEAD = ["S/N", "Pet Name", "Pet Category", "Pet Image", "Max Donation", "Donation Progress", "Actions"];
 
 const MyDonationCampaign = () => {
-    const { user } = useContext(AuthContext);
+    const { user ,loading} = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
     const [data, setData] = useState([]);
 
@@ -41,6 +42,7 @@ const MyDonationCampaign = () => {
             console.error('Error updating status:', error);
         }
     }
+
 
     const columns = React.useMemo(
         () => [
@@ -82,14 +84,14 @@ const MyDonationCampaign = () => {
                 accessor: "viewDonation",
                 Cell: ({ row }) => (
                     <div className="text-black text-2xl">
-                        {row.original.viewDonation} {/* Display the value here */}
-                        <Link >
+                        {/* {row.original.viewDonation}  */}
+                        <Link to={`/dashboard/paymentDetails/${row.original._id}`}>
                             <MdViewKanban />
                         </Link>
                     </div>
                 ),
             },
-            
+
             {
                 Header: "Donation Progress",
                 accessor: "donationProgress",
@@ -101,7 +103,7 @@ const MyDonationCampaign = () => {
                     </div>
                 ),
             },
-            
+
 
             {
                 Header: "Edit",
@@ -158,9 +160,12 @@ const MyDonationCampaign = () => {
         },
         usePagination
     );
+    
 
     return (
+        
         <div className="container mx-auto p-4">
+            
             <Helmet><title>MyCampaign</title></Helmet>
             <div className="my-4 text-center">
                 <h2 className="text-3xl font-semibold text-gray-900">Donation Details List</h2>

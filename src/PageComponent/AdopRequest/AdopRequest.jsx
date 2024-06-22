@@ -5,6 +5,7 @@ import { RxCross1 } from "react-icons/rx";
 import { BiSolidSelectMultiple } from "react-icons/bi";
 import { Button } from "@material-tailwind/react";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
 const AdopRequest = () => {
     const { user } = useContext(AuthContext);
@@ -44,7 +45,13 @@ const AdopRequest = () => {
             } catch (error) {
                 console.error('Failed to update the adoption request:', error);
             }
-            console.log(updatedRequest)
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Adoped soccess",
+                showConfirmButton: false,
+                timer: 1500
+              });
         }
     };
     const handelReject = async (adopReq) => {
@@ -60,7 +67,13 @@ const AdopRequest = () => {
             } catch (error) {
                 console.error('Failed to update the adoption request:', error);
             }
-            console.log(updatedRequest)
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Reject Done ",
+                showConfirmButton: false,
+                timer: 1500
+              });
         }
     };
 

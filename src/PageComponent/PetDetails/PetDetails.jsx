@@ -13,6 +13,7 @@ import { Helmet } from 'react-helmet';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const PetDetails = () => {
     const { user } = useContext(AuthContext);
@@ -23,6 +24,7 @@ const PetDetails = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [location, setLocation] = useState('');
 const axiosPublic =useAxiosPublic()
+const axiosSecure=useAxiosSecure()
     const handleOpen = () => setOpen(!open);
 
     useEffect(() => {
@@ -61,7 +63,7 @@ const axiosPublic =useAxiosPublic()
             phoneNumber: phoneNumber,
             location: location,
         };
-        axiosPublic.post('/petaddRequest',requestData)
+        axiosSecure.post('/petaddRequest',requestData)
         .then(res=>{
             console.log(res.data);
             Swal.fire({
