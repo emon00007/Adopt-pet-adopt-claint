@@ -6,16 +6,21 @@ import { Helmet } from "react-helmet";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { MdViewKanban } from "react-icons/md";
-import { Button, Progress } from "@material-tailwind/react";
+import { Button, Dialog, DialogBody, DialogFooter, Progress,Table } from "@material-tailwind/react";
 import Loder from "../Loder";
+import { Elements } from "@stripe/react-stripe-js";
+
+
 
 const TABLE_HEAD = ["S/N", "Pet Name", "Pet Category", "Pet Image", "Max Donation", "Donation Progress", "Actions"];
 
 const MyDonationCampaign = () => {
-    const { user ,loading} = useContext(AuthContext);
+    const { user, loading } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
     const [data, setData] = useState([]);
-
+    const [PaymentDetails, setPaymentDetails] = useState([])
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(!open);
     const { data: info = [], refetch } = useQuery({
         queryKey: [user?.email],
         queryFn: async () => {
@@ -29,6 +34,14 @@ const MyDonationCampaign = () => {
             }
         },
     });
+
+    const handelarDetails = async (id) => {
+        const { data } = await axiosSecure.get(`/paymentDetails/${id._id}`)
+        setPaymentDetails(data)
+
+    }
+    console.log(PaymentDetails);
+
 
     const handleUpdateStatus = async (id, newStatus) => {
         try {
@@ -83,11 +96,11 @@ const MyDonationCampaign = () => {
                 Header: "View Donation",
                 accessor: "viewDonation",
                 Cell: ({ row }) => (
-                    <div className="text-black text-2xl">
-                        {/* {row.original.viewDonation}  */}
-                        <Link to={`/dashboard/paymentDetails/${row.original._id}`}>
-                            <MdViewKanban />
-                        </Link>
+                    <div onClick={() => handelarDetails(row.original)} className="text-black text-2xl">
+
+
+                        <MdViewKanban onClick={handleOpen} />
+
                     </div>
                 ),
             },
@@ -160,12 +173,12 @@ const MyDonationCampaign = () => {
         },
         usePagination
     );
-    
+
 
     return (
-        
+
         <div className="container mx-auto p-4">
-            
+
             <Helmet><title>MyCampaign</title></Helmet>
             <div className="my-4 text-center">
                 <h2 className="text-3xl font-semibold text-gray-900">Donation Details List</h2>
@@ -236,7 +249,45 @@ const MyDonationCampaign = () => {
                     Next
                 </button>
             </div>
+            <Dialog open={open} handler={handleOpen}>
+                <DialogBody>
+                    <div className="text-center">
+                        <h1>Payment Details</h1>
+                    </div>
+                    <div>
+                        <table>
+                            <thead>
+                                <th className="flex gap-6">
+                                <th>Img</th>
+                                    <th>Price</th>
+                                    <th>ID</th>
+                                    
+                                    {/* Add more table headers as needed */}
+                                </th>
+                            </thead>
+                            <table>
+                                {PaymentDetails.map((payment) => (
+                                    <thead className="flex gap-5" key={payment.id}>
+                                        <th><img className="w-8 h-8 rounded-full" src={payment?.petImage} alt="" /></th>
+                                        <th>{payment?.price}</th>
+                                        <th>{payment?.transitionId}</th>
+                                        
+                                        {/* Add more table cells based on your data */}
+                                    </thead>
+                                ))}
+                            </table>
+                        </table>
+                    </div>
+                </DialogBody>
+                <DialogFooter>
+                    <Button variant="text" color="primary" onClick={handleOpen} className="mr-1">
+                        <span>Close</span>
+                    </Button>
+                </DialogFooter>
+            </Dialog>
+
         </div>
+
     );
 };
 

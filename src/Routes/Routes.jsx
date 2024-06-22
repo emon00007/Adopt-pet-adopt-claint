@@ -27,7 +27,6 @@ import ErrorPage from "../PageComponent/ErrorPage/ErrorPage";
 import AllDonates from "../PageComponent/AdminPanel/AllDonates";
 import AdopRequest from "../PageComponent/AdopRequest/AdopRequest";
 import UpdateDonation from "../PageComponent/UpdatePage/UpdateDonation";
-import PaymentDetails from "../PageComponent/Payment/PaymentDetails";
 import AdminRoutes from "./AdminRoutes";
 
 
@@ -157,11 +156,6 @@ export const  router = createBrowserRouter([
                 path:"/dashboard/allDonates/UpdatePage/:id",
                 element:<AdminRoutes><UpdateDonation></UpdateDonation></AdminRoutes>,
                 loader: ({params}) => fetch(`https://adope-pates-sarver-site.vercel.app/donationUpdate/${params.id}`)
-            },
-            {
-                path:'paymentDetails/:id',
-                element:<PrivateRoute><PaymentDetails></PaymentDetails></PrivateRoute>,
-                // loader: ({params}) => fetch(`https://adope-pates-sarver-site.vercel.app/Payment/${params.id}`)
             }
            
         ]
