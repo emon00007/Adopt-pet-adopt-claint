@@ -30,7 +30,7 @@ const axiosSecure=useAxiosSecure()
     useEffect(() => {
         setIsLoading(true);
 
-        fetch(`http://localhost:5000/petlisting/${id}`)
+        fetch(`https://adope-pates-sarver-site.vercel.app/petlisting/${id}`)
             .then(res => {
                 if (!res.ok) {
                     throw new Error('Network response was not ok');

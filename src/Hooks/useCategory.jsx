@@ -5,7 +5,7 @@ const useCategory = () => {
     const [category, setCategory] = useState([])
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        fetch('http://localhost:5000/petlisting')
+        fetch('https://adope-pates-sarver-site.vercel.app/petlisting')
             .then(res => res.json())
             .then(data => {
                 setCategory(data)

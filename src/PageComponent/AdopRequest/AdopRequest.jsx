@@ -24,7 +24,7 @@ const AdopRequest = () => {
     }, [user, axiosSecure]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/petlisting')
+        fetch('https://adope-pates-sarver-site.vercel.app/petlisting')
             .then(res => res.json())
             .then(data => {
                 setAdoptchack(data);

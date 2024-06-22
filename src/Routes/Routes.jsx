@@ -28,6 +28,7 @@ import AllDonates from "../PageComponent/AdminPanel/AllDonates";
 import AdopRequest from "../PageComponent/AdopRequest/AdopRequest";
 import UpdateDonation from "../PageComponent/UpdatePage/UpdateDonation";
 import PaymentDetails from "../PageComponent/Payment/PaymentDetails";
+import AdminRoutes from "./AdminRoutes";
 
 
 export const  router = createBrowserRouter([
@@ -52,11 +53,11 @@ export const  router = createBrowserRouter([
             },
             {
                 path: '/Petlisting',
-                element: <PrivateRoute><Petlisting></Petlisting></PrivateRoute>
+                element: <Petlisting></Petlisting>
             },
             {
                 path: '/pet/:id',
-                element: <PetDetails></PetDetails>
+                element: <PrivateRoute><PetDetails></PetDetails></PrivateRoute>
             },
             
             
@@ -89,7 +90,7 @@ export const  router = createBrowserRouter([
             ,
             {
                 path:'/donation/:id',
-                element:<DonationDetails></DonationDetails>
+                element:<PrivateRoute><DonationDetails></DonationDetails></PrivateRoute>
 
             }
         ]
@@ -101,12 +102,12 @@ export const  router = createBrowserRouter([
         children:[
             {
                 path: 'MyAddSection',
-                element: <MyAddSection></MyAddSection>
+                element: <PrivateRoute><MyAddSection></MyAddSection></PrivateRoute>
             
             },
             {
                 path: 'CreateDonation',
-                element: <CreateDonation></CreateDonation>
+                element: <PrivateRoute><CreateDonation></CreateDonation></PrivateRoute>
             },
             {
                 path: 'Addapet',
@@ -118,49 +119,49 @@ export const  router = createBrowserRouter([
             },
             {
                 path:'allUsers',
-                element:<AllUsers></AllUsers>
+                element:<AdminRoutes><AllUsers></AllUsers></AdminRoutes>
             }
             ,
             {
                 path:'allPets',
-                element:<AllPets></AllPets>
+                element:<AdminRoutes><AllPets></AllPets></AdminRoutes>
             }
             ,
             {
                 path:'allDonates',
-                element:<AllDonates></AllDonates>
+                element:<AdminRoutes><AllDonates></AllDonates></AdminRoutes>
             }
             ,
             {
                 path:'adoptRequest',
-                element:<AdopRequest></AdopRequest>
+                element:<PrivateRoute><AdopRequest></AdopRequest></PrivateRoute>
             },
             {
                 path: 'UpdatePage/:id',
-                element: <UpdatePage></UpdatePage>,
-                loader: ({params}) => fetch(`http://localhost:5000/petlisting/${params.id}`)
+                element: <PrivateRoute><UpdatePage></UpdatePage></PrivateRoute>,
+                loader: ({params}) => fetch(`https://adope-pates-sarver-site.vercel.app/petlisting/${params.id}`)
                
             },
             {
                 path: '/dashboard/allPets/UpdatePage/:id',
-                element: <UpdatePage></UpdatePage>,
-                loader: ({params}) => fetch(`http://localhost:5000/petlisting/${params.id}`)
+                element: <AdminRoutes><UpdatePage></UpdatePage></AdminRoutes>,
+                loader: ({params}) => fetch(`https://adope-pates-sarver-site.vercel.app/petlisting/${params.id}`)
                
             },
             {
                 path:"donationUpdate/:id",
-                element:<UpdateDonation></UpdateDonation>,
-                loader: ({params}) => fetch(`http://localhost:5000/donationUpdate/${params.id}`)
+                element:<PrivateRoute><UpdateDonation></UpdateDonation></PrivateRoute>,
+                loader: ({params}) => fetch(`https://adope-pates-sarver-site.vercel.app/donationUpdate/${params.id}`)
             },
             {
                 path:"/dashboard/allDonates/UpdatePage/:id",
-                element:<UpdateDonation></UpdateDonation>,
-                loader: ({params}) => fetch(`http://localhost:5000/donationUpdate/${params.id}`)
+                element:<AdminRoutes><UpdateDonation></UpdateDonation></AdminRoutes>,
+                loader: ({params}) => fetch(`https://adope-pates-sarver-site.vercel.app/donationUpdate/${params.id}`)
             },
             {
                 path:'paymentDetails/:id',
-                element:<PaymentDetails></PaymentDetails>,
-                // loader: ({params}) => fetch(`http://localhost:5000/Payment/${params.id}`)
+                element:<PrivateRoute><PaymentDetails></PaymentDetails></PrivateRoute>,
+                // loader: ({params}) => fetch(`https://adope-pates-sarver-site.vercel.app/Payment/${params.id}`)
             }
            
         ]

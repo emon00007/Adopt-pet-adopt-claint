@@ -33,7 +33,7 @@ const Petlisting = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        let url = `http://localhost:5000/petlisting`;
+        let url = `https://adope-pates-sarver-site.vercel.app/petlisting`;
         if (selectedOption.value) {
             url += `?category=${selectedOption.value}`;
         }
