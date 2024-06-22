@@ -102,9 +102,9 @@ const CustomNavbar = () => {
   const toggleDarkMode = () => {
     setDark(!dark)
     if(dark ){
-      document.body.classList.add('body.dark')
+      document.getElementById('body').classList.add('body.dark')
     }else
-    {document.body.classList.remove('body.dark')}
+    {document.getElementById('body').classList.remove('body.dark')}
     
   }
 
