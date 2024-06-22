@@ -6,11 +6,10 @@ import { Helmet } from "react-helmet";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import { MdViewKanban } from "react-icons/md";
-import { Button, Dialog, DialogBody, DialogFooter, Progress,Table } from "@material-tailwind/react";
+import { Button, Dialog, DialogBody, DialogFooter, Progress, Table } from "@material-tailwind/react";
 import Loder from "../Loder";
-import { Elements } from "@stripe/react-stripe-js";
-
-
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const TABLE_HEAD = ["S/N", "Pet Name", "Pet Category", "Pet Image", "Max Donation", "Donation Progress", "Actions"];
 
@@ -18,10 +17,11 @@ const MyDonationCampaign = () => {
     const { user, loading } = useContext(AuthContext);
     const axiosSecure = useAxiosSecure();
     const [data, setData] = useState([]);
-    const [PaymentDetails, setPaymentDetails] = useState([])
+    const [PaymentDetails, setPaymentDetails] = useState([]);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(!open);
-    const { data: info = [], refetch } = useQuery({
+
+    const { data: info = [], refetch, isLoading } = useQuery({
         queryKey: [user?.email],
         queryFn: async () => {
             try {
@@ -36,12 +36,9 @@ const MyDonationCampaign = () => {
     });
 
     const handelarDetails = async (id) => {
-        const { data } = await axiosSecure.get(`/paymentDetails/${id._id}`)
-        setPaymentDetails(data)
-
-    }
-    console.log(PaymentDetails);
-
+        const { data } = await axiosSecure.get(`/paymentDetails/${id._id}`);
+        setPaymentDetails(data);
+    };
 
     const handleUpdateStatus = async (id, newStatus) => {
         try {
@@ -54,8 +51,7 @@ const MyDonationCampaign = () => {
         } catch (error) {
             console.error('Error updating status:', error);
         }
-    }
-
+    };
 
     const columns = React.useMemo(
         () => [
@@ -97,27 +93,19 @@ const MyDonationCampaign = () => {
                 accessor: "viewDonation",
                 Cell: ({ row }) => (
                     <div onClick={() => handelarDetails(row.original)} className="text-black text-2xl">
-
-
                         <MdViewKanban onClick={handleOpen} />
-
                     </div>
                 ),
             },
-
             {
                 Header: "Donation Progress",
                 accessor: "donationProgress",
                 Cell: ({ row }) => (
                     <div className="text-black">
-                        {/* Assuming 'donate' and 'maxDonate' are properties of row.original */}
-                        {/* Calculate donation progress */}
                         <Progress value={(row.original.donate * parseFloat(row.original.maxDonate)) / 100} />
                     </div>
                 ),
             },
-
-
             {
                 Header: "Edit",
                 accessor: "actions",
@@ -174,52 +162,54 @@ const MyDonationCampaign = () => {
         usePagination
     );
 
-
     return (
-
         <div className="container mx-auto p-4">
-
             <Helmet><title>MyCampaign</title></Helmet>
             <div className="my-4 text-center">
                 <h2 className="text-3xl font-semibold text-gray-900">Donation Details List</h2>
                 <p>These are the details about your Donation list</p>
             </div>
             <div className="overflow-x-auto">
-                <table {...getTableProps()} className="min-w-full bg-white border border-gray-200">
-                    <thead>
-                        {headerGroups.map((headerGroup) => (
-                            <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
-                                {headerGroup.headers.map((column) => (
-                                    <th
-                                        {...column.getHeaderProps()}
-                                        key={column.id}
-                                        className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                    >
-                                        {column.render("Header")}
-                                    </th>
-                                ))}
-                            </tr>
-                        ))}
-                    </thead>
-                    <tbody {...getTableBodyProps()} className="bg-white divide-y divide-gray-200">
-                        {page.map((row) => {
-                            prepareRow(row);
-                            return (
-                                <tr {...row.getRowProps()} key={row.id}>
-                                    {row.cells.map((cell) => (
-                                        <td
-                                            {...cell.getCellProps()}
-                                            key={cell.column.id}
-                                            className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                {isLoading ? (
+                    // Display loading skeletons
+                    <Skeleton count={10} height={40} />
+                ) : (
+                    <table {...getTableProps()} className="min-w-full bg-white border border-gray-200">
+                        <thead>
+                            {headerGroups.map((headerGroup) => (
+                                <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+                                    {headerGroup.headers.map((column) => (
+                                        <th
+                                            {...column.getHeaderProps()}
+                                            key={column.id}
+                                            className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                         >
-                                            {cell.render("Cell")}
-                                        </td>
+                                            {column.render("Header")}
+                                        </th>
                                     ))}
                                 </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
+                            ))}
+                        </thead>
+                        <tbody {...getTableBodyProps()} className="bg-white divide-y divide-gray-200">
+                            {page.map((row) => {
+                                prepareRow(row);
+                                return (
+                                    <tr {...row.getRowProps()} key={row.id}>
+                                        {row.cells.map((cell) => (
+                                            <td
+                                                {...cell.getCellProps()}
+                                                key={cell.column.id}
+                                                className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                                            >
+                                                {cell.render("Cell")}
+                                            </td>
+                                        ))}
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                )}
             </div>
             <div className="flex items-center justify-between mt-4">
                 <button
@@ -257,25 +247,23 @@ const MyDonationCampaign = () => {
                     <div>
                         <table>
                             <thead>
-                                <th className="flex gap-6">
-                                <th>Img</th>
+                                <tr className="flex gap-6">
+                                    <th>Img</th>
                                     <th>Price</th>
                                     <th>ID</th>
-                                    
                                     {/* Add more table headers as needed */}
-                                </th>
+                                </tr>
                             </thead>
-                            <table>
+                            <tbody>
                                 {PaymentDetails.map((payment) => (
-                                    <thead className="flex gap-5" key={payment.id}>
-                                        <th><img className="w-8 h-8 rounded-full" src={payment?.petImage} alt="" /></th>
-                                        <th>{payment?.price}</th>
-                                        <th>{payment?.transitionId}</th>
-                                        
+                                    <tr className="flex gap-5" key={payment.id}>
+                                        <td><img className="w-8 h-8 rounded-full" src={payment?.petImage} alt="" /></td>
+                                        <td>{payment?.price}</td>
+                                        <td>{payment?.transitionId}</td>
                                         {/* Add more table cells based on your data */}
-                                    </thead>
+                                    </tr>
                                 ))}
-                            </table>
+                            </tbody>
                         </table>
                     </div>
                 </DialogBody>
@@ -285,9 +273,7 @@ const MyDonationCampaign = () => {
                     </Button>
                 </DialogFooter>
             </Dialog>
-
         </div>
-
     );
 };
 

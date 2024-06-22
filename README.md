@@ -29,3 +29,4 @@
 - [Swiper](https://www.npmjs.com/package/swiper) for interactive slider functionality.
 - [React Icons](https://www.npmjs.com/package/react-icons) for easy access to icons.
 [metereal ui](https://www.material-tailwind.com/)
+[loading-skeleton](https://www.npmjs.com/package/react-loading-skeleton?activeTab=readme)

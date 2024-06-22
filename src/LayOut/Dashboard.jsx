@@ -41,7 +41,7 @@ const Dashboard = () => {
                             <li ><NavLink className={({isActive})=>isActive?'text-blue-800 gap-2 border-black border flex rounded-xl px-5 py-3 bg-blue-gray-200 font-semibold':'flex  font-semibold px-5 py-3 gap-2'} to="/dashboard/allDonates"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>All Donation Campaign</NavLink></li>
                             <li ><NavLink className={({isActive})=>isActive?'text-blue-800 gap-2 border-black border flex rounded-xl px-5 py-3 bg-blue-gray-200 font-semibold':'flex  font-semibold px-5 py-3 gap-2'} to="/dashboard/Addapet"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>Add a Pet</NavLink></li>
 
-                            <li><NavLink className={({isActive})=>isActive?'text-blue-800 gap-2 border-black border flex rounded-xl px-5 py-3 bg-blue-gray-200 font-semibold':'flex  font-semibold px-5 py-3 gap-2'} to="/dashboard/MyAddSection">  <FaTableList className=" text-lg"></FaTableList>My Add Page</NavLink></li>
+                            <li><NavLink className={({isActive})=>isActive?'text-blue-800 gap-2 border-black border flex rounded-xl px-5 py-3 bg-blue-gray-200 font-semibold':'flex  font-semibold px-5 py-3 gap-2'} to="/dashboard/MyAddSection">  <FaTableList className=" text-lg"></FaTableList>My Add Pat</NavLink></li>
 
                             <li><NavLink className={({isActive})=>isActive?'text-blue-800 gap-2 border-black border flex rounded-xl px-5 py-3 bg-blue-gray-200 font-semibold':'flex  font-semibold px-5 py-3 gap-2'} to="/dashboard/CreateDonation">  <SiMercadopago className="text-2xl"></SiMercadopago>Create Donation Campaign</NavLink></li>
 
@@ -58,7 +58,7 @@ const Dashboard = () => {
                             !isAdmin&& <>
                             <li  ><NavLink className={({isActive})=>isActive?'text-blue-800 gap-2 border-black border flex rounded-xl px-5 py-3 bg-blue-gray-200 font-semibold':'flex  font-semibold px-5 py-3 gap-2'} to="/dashboard/Addapet"> <MdOutlinePostAdd className=" text-2xl"> </MdOutlinePostAdd>Add a Pet</NavLink></li>
 
-                            <li><NavLink className={({isActive})=>isActive?'text-blue-800 gap-2 border-black border flex rounded-xl px-5 py-3 bg-blue-gray-200 font-semibold':'flex  font-semibold px-5 py-3 gap-2'} to="/dashboard/MyAddSection"><FaTableList className=" text-lg"></FaTableList>My Add Page</NavLink></li>
+                            <li><NavLink className={({isActive})=>isActive?'text-blue-800 gap-2 border-black border flex rounded-xl px-5 py-3 bg-blue-gray-200 font-semibold':'flex  font-semibold px-5 py-3 gap-2'} to="/dashboard/MyAddSection"><FaTableList className=" text-lg"></FaTableList>My Add Pat</NavLink></li>
 
                             <li><NavLink className={({isActive})=>isActive?'text-blue-800 gap-2 border-black border flex rounded-xl px-5 py-3 bg-blue-gray-200 font-semibold':'flex  font-semibold px-5 py-3 gap-2'} to="/dashboard/CreateDonation">  <SiMercadopago className="text-2xl"></SiMercadopago>Create Donation Campaign</NavLink></li>
 
