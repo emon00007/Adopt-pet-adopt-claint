@@ -30,3 +30,30 @@
 - [React Icons](https://www.npmjs.com/package/react-icons) for easy access to icons.
 [metereal ui](https://www.material-tailwind.com/)
 [loading-skeleton](https://www.npmjs.com/package/react-loading-skeleton?activeTab=readme)
+
+
+
+## Code clone details
+If you have colone mu code follow some step
+
+Install Required Packages:
+
+Identify and install all necessary packages as per your plan or requirements.
+Update Base URLs (axusSecure and axusPublic):
+
+Locate where axusSecure and axusPublic base URLs are defined in your codebase.
+Update these URLs to point to the correct server endpoints.
+Change Image Hosting & Payment API:
+
+Update configurations related to image hosting and payment APIs in your server-side code.
+Replace API keys or credentials with the new ones as necessary.
+Update API and MongoDB Credentials:
+
+Rotate API keys, usernames, and passwords for all APIs and databases (like MongoDB).
+Update these credentials in your server-side code and configuration files.
+Ensure Site Functionality:
+
+Test thoroughly to ensure that the site is running smoothly after the updates.
+Verify that all functionalities (including image hosting, payment processing, and API interactions) work as expected.
+
+you can't run if you have any problem to run please text me.
